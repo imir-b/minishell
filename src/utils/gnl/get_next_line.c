@@ -83,10 +83,15 @@ char	*get_next_line(int fd)
 	{
 		line = ft_strndup(stash[fd], nl - stash[fd] + 1);
 		if (!line)
-			return (free(stash[fd]), stash[fd] = NULL, NULL);
+		{
+			free(stash[fd]);
+			stash[fd] = NULL;
+			return (NULL);
+		}
 		stash[fd] = ft_clean_stash(&stash[fd]);
 		return (line);
 	}
 	line = stash[fd];
-	return (stash[fd] = NULL, line);
+	stash[fd] = NULL;
+	return (line);
 }

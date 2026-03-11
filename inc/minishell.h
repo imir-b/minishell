@@ -16,5 +16,9 @@
 # include "data.h"
 
 # include "parsing.h"
+# include "libft.h"
+
+void	ft_init_minishell(void);
+void	ft_run_minishell(void);
 
 #endif
