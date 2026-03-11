@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:50:10 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/09 12:07:30 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/09 14:20:27 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*ft_parse_tokens(t_token *tokens);
 void	ft_run_minishell()
 {
 	t_token	*tokens;
+	t_ast	*ast;
 	char	*command_line;
 	void	*ast;
 
