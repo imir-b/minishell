@@ -16,7 +16,7 @@ int	main(int ac, char **av)
 {
 	if (ac > 1)
 		return (1);
-	if (av[1] != "./minishell")
+	if (ft_strncmp(av[1], "./minishell", 12) != 0)
 		return (1);
 	ft_init_minishell();
 	while (1)

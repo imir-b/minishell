@@ -13,6 +13,12 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-t_token	                    *ft_tokenizer(char *command_line);
+# include "data.h"
+
+int			ft_is_space(char c);
+int			ft_is_special_char(char c);
+char		*ft_extract_word(char *command_line, int *i);
+char		*ft_extract_operator(char *command_line, int *i);
+t_token		*ft_tokenizer(char *command_line);
 
 #endif

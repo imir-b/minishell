@@ -23,7 +23,13 @@ char	*ft_strndup(char *src, size_t n)
 	dest = malloc(sizeof(char) * (len + 1));
 	if (!dest)
 		return (NULL);
-	ft_memcpy(dest, src, len);
+	size_t	i;
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = src[i];
+		i++;
+	}
 	dest[len] = '\0';
 	return (dest);
 }
