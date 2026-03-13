@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/09 14:34:17 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/11 01:52:26 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@
 // expendre une variable pour trouver sa valeur grace a une hash map
 void	ft_djb2()
 {
-	
+
 }

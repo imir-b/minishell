@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/09 14:45:52 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/11 02:31:48 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@ void	ft_tokenize_quotes_word(char *command_line, int *i, t_token *tokens)
 
 void	ft_tokenize_word(char *command_line, int *i, t_token *tokens)
 {
-	
+	t_token	*token;
+	int		j;
+	char	*value;
+
+	j = 0;
+	while (command_line[*i])
+		value[j++] = command_line[(*i)++];
+	token = (t_token *){WORD, value, NULL};
 }
 
 void	ft_tokenize_special_char(char *command_line, int *i, t_token *tokens)
