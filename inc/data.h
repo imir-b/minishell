@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/11 02:25:21 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/13 22:24:29 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,11 @@ typedef enum e_token_type
 
 typedef struct s_token
 {
-<<<<<<< HEAD
 	t_token_type	type;
 	char			*value;
-	t_token			*prev;
 	t_token			*next;
+	t_token			*prev;
 }	t_token;
-=======
-	TokenType	type;
-	char		*value;
-	struct s_token	*next;
-} t_token;
->>>>>>> 3ff19a02160bc41edfa8b454a2b9cca46e3f9ed4
 
 typedef enum e_node_type
 {
