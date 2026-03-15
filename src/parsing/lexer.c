@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
-/*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/11 02:31:48 by vbleskin         ###   ########.fr       */
-=======
-/*   Created: 2026/03/11 23:05:14 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/11 23:06:22 by vlad             ###   ########.fr       */
->>>>>>> 3ff19a02160bc41edfa8b454a2b9cca46e3f9ed4
+/*   Created: 2026/03/15 14:55:33 by vbleskin          #+#    #+#             */
+/*   Updated: 2026/03/15 16:07:44 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +21,8 @@ int	ft_is_space(char c)
 	return (c == ' ' || (c >= 9 && c <= 13));
 }
 
-int	ft_is_special_char(char c)
+int	ft_is_special_char(char *command_line, int *i, t_token *tokens)
 {
-<<<<<<< HEAD
 	t_token	*token;
 	char	*value;
 	int		j;
@@ -91,10 +85,6 @@ int	ft_is_in_charset(char c, char *charset)
 			return (1);
 		i++;
 	}
-=======
-	if (c == '|' || c == '>' || c == '<')
-		return (1);
->>>>>>> 3ff19a02160bc41edfa8b454a2b9cca46e3f9ed4
 	return (0);
 }
 
@@ -121,7 +111,7 @@ char	*ft_extract_word(char *command_line, int *i)
 	else
 	{
 		while (command_line[*i] && !ft_is_space(command_line[*i])
-			&& !ft_is_special_char(command_line[*i]))
+			&& !ft_is_in_charset(command_line[*i], "|<>"))
 		{
 			len++;
 			(*i)++;
