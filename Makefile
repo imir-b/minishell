@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+         #
+#    By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/11 23:05:00 by vlad              #+#    #+#              #
-#    Updated: 2026/03/11 23:05:00 by vlad             ###   ########.fr        #
+#    Updated: 2026/03/18 04:22:41 by vbleskin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC_DIR			=	src
 OBJ_DIR			=	obj
 INC_DIR			=	inc
 
-SUB_DIRS		=	parsing \
+SUB_DIRS		=	data \
+					parsing \
 					utils \
 					utils/string \
 					utils/gnl

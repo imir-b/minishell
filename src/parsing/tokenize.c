@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/15 16:54:38 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/18 04:50:45 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ void	*ft_free_tokens(t_token *tokens)
 t_token_type	ft_get_token_type(char *value)
 {
 	if (value[0] == '|' && value[1] == '|')
-		return (OR_IF);
+		return (TOK_OR);
 	else if (value[0] == '|')
-		return (PIPE);
+		return (TOK_PIPE);
 	else if (value[0] == '>' && value[1] == '>')
-		return (APPEND);
+		return (TOK_APPEND);
 	else if (value[0] == '>')
-		return (REDIR_OUT);
+		return (TOK_REDIR_OUT);
 	else if (value[0] == '<' && value[1] == '<')
-		return (HEREDOC);
+		return (TOK_HEREDOC);
 	else if (value[0] == '<')
-		return (REDIR_IN);
+		return (TOK_REDIR_IN);
 	else if (value[0] == '&' && value[1] == '&')
-		return (AND_IF);
+		return (TOK_AND);
 	else if (value[0] == '(')
-		return (L_PAREN);
+		return (TOK_L_PAREN);
 	else if (value[0] == ')')
-		return (R_PAREN);
-	return (WORD);
+		return (TOK_R_PAREN);
+	return (TOK_WORD);
 }
 
 t_token	*ft_new_token(char *value, t_token_type type)
@@ -78,7 +78,7 @@ void	ft_token_add_back(t_token **tokens, t_token *new_token)
 	old_last->next = new_token;
 	new_token->prev = old_last;
 	(*tokens)->prev = new_token;
-	new_token->next = tokens;
+	new_token->next = *tokens;
 }
 
 t_token	*ft_tokenizer(char *command_line)
@@ -103,7 +103,7 @@ t_token	*ft_tokenizer(char *command_line)
 		else
 		{
 			value = ft_extract_word(command_line, &i);
-			new_token = ft_new_token(value, WORD);
+			new_token = ft_new_token(value, TOK_WORD);
 			ft_token_add_back(&tokens, new_token);
 		}
 	}

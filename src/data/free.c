@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/08 15:07:03 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:36:44 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/03/18 04:10:40 by vbleskin          #+#    #+#             */
+/*   Updated: 2026/03/18 04:10:52 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	*ft_free_data(t_minishell *data)
 {
-	t_minishell	*data;
+	int	i;
 
-	if (ac > 1)
-		return (1);
-	(void)av;
-	data = ft_init_minishell(envp);
-	ft_process_minishell(data);
-	return (0);
+	i = 0;
+	while (data->paths[i])
+		free(data->paths[i++]);
+	free (data->paths);
+	free (data);
+	return (NULL);
 }

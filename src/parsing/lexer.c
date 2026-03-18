@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 14:55:33 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/15 16:07:44 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/18 03:34:01 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int	ft_is_space(char c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
-}
-
-int	ft_is_special_char(char *command_line, int *i, t_token *tokens)
-{
-	t_token	*token;
-	char	*value;
-	int		j;
-
-	ft_create_token();
-	j = 0;
-	if (command_line[*i] == '\"')
-		(*i)++;
-	while (command_line[*i] && (command_line[*i] != '\"'))
-		value[j++] = command_line[(*i)++];
-	token = (t_token *){WORD, value, NULL};
-	ft_add_token(token, tokens);
-}
-
-void	ft_tokenize_word(char *command_line, int *i, t_token *tokens)
-{
-	t_token	*token;
-	int		j;
-	char	*value;
-
-	j = 0;
-	while (command_line[*i])
-		value[j++] = command_line[(*i)++];
-	token = (t_token *){WORD, value, NULL};
-}
-
-void	ft_tokenize_special_char(char *command_line, int *i, t_token *tokens)
-{
-	t_token	*token;
-
-	if (command_line[*i] == '|')
-		token = (t_token *){PIPE, NULL, NULL};
-	else if (command_line[*i] == '>')
-	{
-		if (command_line[(*i) + 1] == '>')
-		{
-			token = (t_token *){APPEND, NULL, NULL};
-			(*i)++;
-		}
-		else
-			token = (t_token *){REDIR_OUT, NULL, NULL};
-	}
-	else if (command_line[*i] == '<')
-		token = (t_token *){REDIR_IN, NULL, NULL};
-	(*i)++;
-	ft_add_token(token, tokens);
 }
 
 /**
@@ -90,35 +40,24 @@ int	ft_is_in_charset(char c, char *charset)
 
 char	*ft_extract_word(char *command_line, int *i)
 {
-	int		start;
-	int		len;
-	char	*value;
+	int	start;
+	int	len;
+	int	quote;
 
 	start = *i;
-	len = 0;
-	if (command_line[*i] == '\"')
+	len = ((quote = 0));
+	while (command_line[*i])
 	{
-		start++;
+		if ((command_line[*i] == '\'' || command_line[*i] == '\"')
+			&& (!quote || quote == command_line[*i]))
+			quote ^= command_line[*i];
+		else if (!quote && (ft_is_space(command_line[*i])
+				|| ft_is_in_charset(command_line[*i], "|<>")))
+			break ;
+		len++;
 		(*i)++;
-		while (command_line[*i] && command_line[*i] != '\"')
-		{
-			len++;
-			(*i)++;
-		}
-		if (command_line[*i] == '\"')
-			(*i)++;
 	}
-	else
-	{
-		while (command_line[*i] && !ft_is_space(command_line[*i])
-			&& !ft_is_in_charset(command_line[*i], "|<>"))
-		{
-			len++;
-			(*i)++;
-		}
-	}
-	value = ft_substr(command_line, start, len);
-	return (value);
+	return (ft_substr(command_line, start, len));
 }
 
 char	*ft_extract_operator(char *command_line, int *i)
@@ -130,7 +69,9 @@ char	*ft_extract_operator(char *command_line, int *i)
 	start = *i;
 	len = 1;
 	if ((command_line[*i] == '>' && command_line[*i + 1] == '>')
-		|| (command_line[*i] == '<' && command_line[*i + 1] == '<'))
+		|| (command_line[*i] == '<' && command_line[*i + 1] == '<')
+		|| (command_line[*i] == '&' && command_line[*i + 1] == '&')
+		|| (command_line[*i] == '|' && command_line[*i + 1] == '|'))
 		len = 2;
 	value = ft_substr(command_line, start, len);
 	*i += len;
