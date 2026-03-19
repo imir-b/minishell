@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 14:55:33 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/18 03:34:01 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/18 23:15:31 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stddef.h>
-#include <stdlib.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 

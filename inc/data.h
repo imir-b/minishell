@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:28:39 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/20 00:14:11 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_token						t_token;
 typedef enum e_node_type					t_node_type;
 
 typedef struct s_cmd_data					t_cmd_data;
+
+typedef struct s_redir_data					t_redir_data;
 
 /**
  * type = type du noeud
@@ -59,7 +61,20 @@ enum e_node_type
 	NODE_PIPE,
 	NODE_AND,
 	NODE_OR,
+	NODE_REDIR_IN,
+	NODE_REDIR_OUT,
+	NODE_APPEND,
+	NODE_HEREDOC,
 	NODE_SUBSHELL
+};
+
+struct s_ast
+{
+	t_node_type		type;
+	t_ast			*right;
+	t_ast			*left;
+	t_cmd_data		*cmd_data;
+	t_redir_data	*redir_data;
 };
 
 struct s_cmd_data
@@ -69,19 +84,17 @@ struct s_cmd_data
 	char	*path;
 };
 
-struct s_ast
+struct s_redir_data
 {
-	t_node_type	*type;
-	t_cmd_data	*cmd_data;
-	char		*file;
-	t_ast		*right;
-	t_ast		*left;
+	char	*file;
+	int		flags;
 };
 
 struct s_minishell
 {
 	char	**envp;
 	char	**paths;
+	t_ast	*ast;
 };
 
 #endif

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/09 12:05:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:51:42 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/03/20 00:16:22 by vlad              #+#    #+#             */
+/*   Updated: 2026/03/20 00:23:47 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*ft_create_tree(t_token *tokens)
+void    ft_execute(t_minishell *data)
 {
-	(void)tokens;
-	return (NULL);
+    (void)data;
 }

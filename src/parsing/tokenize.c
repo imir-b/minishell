@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:50:45 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/18 23:16:23 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@
 void	*ft_free_tokens(t_token *tokens)
 {
 	t_token	*last;
+	t_token	*next_node;
 
+	if (!tokens)
+		return (NULL);
 	last = tokens->prev;
-	while (tokens != last)
+	while (1)
 	{
+		next_node = tokens->next;
+		if (tokens->value)
+			free(tokens->value);
 		free(tokens);
-		tokens = tokens->next;
+		if (tokens == last)
+			break ;
+		tokens = next_node;
 	}
 	return (NULL);
 }
@@ -72,13 +80,15 @@ void	ft_token_add_back(t_token **tokens, t_token *new_token)
 	if (!*tokens)
 	{
 		*tokens = new_token;
+		new_token->next = new_token;
+		new_token->prev = new_token;
 		return ;
 	}
 	old_last = (*tokens)->prev;
 	old_last->next = new_token;
 	new_token->prev = old_last;
-	(*tokens)->prev = new_token;
 	new_token->next = *tokens;
+	(*tokens)->prev = new_token;
 }
 
 t_token	*ft_tokenizer(char *command_line)

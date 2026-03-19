@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:20:13 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/20 00:22:03 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "data.h"
+# include "minishell.h"
 
 int			ft_is_space(char c);
 

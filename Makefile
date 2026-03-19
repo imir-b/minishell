@@ -32,6 +32,9 @@ INC_DIR			=	inc
 
 SUB_DIRS		=	data \
 					parsing \
+					parsing/ast \
+					exec \
+					builtin \
 					utils \
 					utils/string \
 					utils/gnl
@@ -56,7 +59,7 @@ CFLAGS			=	-Wall -Wextra -Werror -g3
 
 CPPFLAGS		=	-I $(INC_DIR)
 
-INCLUDE_LIB		=
+INCLUDE_LIB		=	-lreadline
 
 # ------------------------------------------------------------------------------
 # colors

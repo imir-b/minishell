@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/09 11:58:04 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:20:52 by vlad             ###   ########.fr       */
+/*   Created: 2026/03/20 00:18:56 by vlad              #+#    #+#             */
+/*   Updated: 2026/03/20 00:22:12 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef INIT_H
+# define INIT_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <fcntl.h>
+# include "minishell.h"
 
-# include "libft.h"
+t_minishell		*ft_init_minishell(char **envp);
+void			ft_process_minishell(t_minishell *data);
 
-# include "data.h"
+void			ft_setup_signals(void);
 
-# include "init.h"
-# include "parsing.h"
-# include "exec.h"
-
-/* Debug */
-void			ft_print_tokens(t_token *tokens);
+void			*ft_free_data(t_minishell *data);
 
 #endif
