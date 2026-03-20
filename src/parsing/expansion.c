@@ -54,3 +54,9 @@ void	ft_djb2()
 {
 
 }
+
+void	ft_expand_variables(t_ast *ast, t_minishell *data)
+{
+	(void)ast;
+	(void)data;
+}

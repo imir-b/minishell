@@ -39,8 +39,6 @@ void	free_redir_data(t_redir_data *data)
 {
 	if (data->file)
 		free(data->file);
-	if (data->flags)
-		free(data->flags);
 	free(data);
 }
 

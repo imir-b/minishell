@@ -25,6 +25,12 @@ char		*ft_extract_word(char *command_line, int *i);
 char		*ft_extract_operator(char *command_line, int *i);
 t_token		*ft_tokenizer(char *command_line);
 
-t_ast		*ft_create_tree(t_token *tokens);
+t_ast		*ft_create_and_or_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_pipe_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_subshell_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_redir_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_command_node(t_token *first, t_minishell *data);
+t_ast		*ft_create_tree(t_token *tokens, t_minishell *data);
+void		ft_expand_variables(t_ast *ast, t_minishell *data);
 
 #endif

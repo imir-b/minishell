@@ -31,5 +31,6 @@
 
 /* Debug */
 void			ft_print_tokens(t_token *tokens);
+void			ft_print_ast(t_ast *node, int level);
 
 #endif

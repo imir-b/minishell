@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 22:19:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:48:38 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/20 01:11:13 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,13 @@ char		*ft_strndup(char *src, size_t n);
  * - return : la sous-chaine allouee ou NULL.
  */
 char		*ft_substr(char const *s, unsigned int start, size_t len);
+
+/**
+ * Cette fonction agit comme un strjoin avec un separateur. Elle concatene
+ * 's1' avec 's2' mais met 'sep' entre les deux chaines. Termine la chaine
+ * de retour par '\0'.
+ */
+char		*ft_super_join(char const *s1, char const *s2, char sep);
 
 /**
  * Alloue et retourne la concatenation de s1 et s2,

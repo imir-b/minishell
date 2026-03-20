@@ -21,14 +21,16 @@ void	ft_break_circle(t_token *first)
 void	ft_parse_and_execute_command_line(char *command_line, t_minishell *data)
 {
 	t_token	*tokens;
-	t_ast	*ast;
 
 	tokens = ft_tokenizer(command_line);
 	ft_print_tokens(tokens);
 	ft_break_circle(tokens);
-	ast = ft_create_tree(tokens);
-	ft_expand(ast);
-	ft_execute(ast, data);
+	data->ast = ft_create_tree(tokens, data);
+	printf("\n--- AST ---\n");
+	ft_print_ast(data->ast, 0);
+	printf("-----------\n\n");
+	ft_expand_variables(data->ast, data);
+	ft_execute(data);
 }
 
 void	ft_process_minishell(t_minishell *data)
