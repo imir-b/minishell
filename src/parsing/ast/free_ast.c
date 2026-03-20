@@ -42,12 +42,12 @@ void	free_redir_data(t_redir_data *data)
 	free(data);
 }
 
-void	free_ast(t_ast *self)
+void	ft_free_ast(t_ast *self)
 {
 	if (self->left)
-		free_ast(self->left);
+		ft_free_ast(self->left);
 	if (self->right)
-		free_ast(self->right);
+		ft_free_ast(self->right);
 	if (self->type == NODE_COMMAND)
 		free_cmd_data(self->cmd_data);
 	else if (self->type == NODE_REDIR_IN || self->type == NODE_REDIR_OUT

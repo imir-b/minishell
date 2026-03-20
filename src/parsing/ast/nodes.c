@@ -62,23 +62,3 @@ t_ast	*ft_create_pipe_node(t_token *current, t_token *first, t_minishell *data)
 	node->right = ft_create_tree(first_right, data);
 	return (node);
 }
-
-t_ast	*ft_create_subshell_node(t_token *current, t_token *first, t_minishell *data)
-{
-	t_ast	*node;
-	t_token	*first_right;
-
-	first_right = current->next;
-	ft_cut_list(current);
-	if (first == current)
-		first = NULL;
-	node = malloc(sizeof(t_ast) * 1);
-	if (!node)
-		return (NULL);
-	node->cmd_data = NULL;
-	node->redir_data = NULL;
-	node->type = NODE_SUBSHELL;
-	node->left = ft_create_tree(first, data);
-	node->right = ft_create_tree(first_right, data);
-	return (node);
-}

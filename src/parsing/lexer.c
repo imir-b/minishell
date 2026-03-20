@@ -50,7 +50,7 @@ char	*ft_extract_word(char *command_line, int *i)
 			&& (!quote || quote == command_line[*i]))
 			quote ^= command_line[*i];
 		else if (!quote && (ft_is_space(command_line[*i])
-				|| ft_is_in_charset(command_line[*i], "|<>")))
+				|| ft_is_in_charset(command_line[*i], "|<>&()")))
 			break ;
 		len++;
 		(*i)++;

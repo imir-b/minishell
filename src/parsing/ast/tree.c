@@ -40,7 +40,7 @@ t_ast	*ft_create_tree(t_token *first, t_minishell *data)
 		return (ft_create_pipe_node(op, first, data));
 	op = ft_find_operator(first, TOK_L_PAREN, TOK_L_PAREN);
 	if (op)
-		return (ft_create_subshell_node(op, first, data));
+		return (ft_create_subshell_node(op, data));
 	op = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
 	if (op)
 		return (ft_create_redir_node(op, first, data));

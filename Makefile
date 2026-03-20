@@ -36,7 +36,9 @@ SUB_DIRS		=	data \
 					exec \
 					builtin \
 					utils \
+					utils/io \
 					utils/string \
+					utils/memory \
 					utils/gnl
 
 # ------------------------------------------------------------------------------

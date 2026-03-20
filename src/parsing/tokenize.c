@@ -11,28 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
-
-void	*ft_free_tokens(t_token *tokens)
-{
-	t_token	*last;
-	t_token	*next_node;
-
-	if (!tokens)
-		return (NULL);
-	last = tokens->prev;
-	while (1)
-	{
-		next_node = tokens->next;
-		if (tokens->value)
-			free(tokens->value);
-		free(tokens);
-		if (tokens == last)
-			break ;
-		tokens = next_node;
-	}
-	return (NULL);
-}
 
 t_token_type	ft_get_token_type(char *value)
 {
