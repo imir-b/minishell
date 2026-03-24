@@ -14,7 +14,7 @@
 
 int	ft_syntax_error(char *token_value)
 {
-	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
 	ft_putstr_fd(token_value, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 	return (1);
@@ -47,11 +47,13 @@ int	ft_check_syntax(t_token *tokens)
     return (0);
 }
 
-void	ft_parse_and_execute_command_line(char *command_line, t_minishell *data)
+void	ft_process_command_line(char *command_line, t_minishell *data)
 {
 	t_token	*tokens;
 
 	tokens = ft_tokenizer(command_line);
+	if (!tokens)
+		return ;
 	ft_print_tokens(tokens); // debug
 	ft_break_circle(tokens);
 	if (ft_check_syntax(tokens))
@@ -75,7 +77,6 @@ void	ft_process_minishell(t_minishell *data)
 
 	while (1)
 	{
-		ft_setup_signals();
 		command_line = readline("minishell>$ ");
 		if (!command_line)
 		{
@@ -84,7 +85,7 @@ void	ft_process_minishell(t_minishell *data)
 		}
 		if (*command_line)
 			add_history(command_line);
-		ft_parse_and_execute_command_line(command_line, data);
+		ft_process_command_line(command_line, data);
 		free(command_line);
 	}
 }

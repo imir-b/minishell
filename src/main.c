@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	(void)av;
 	data = ft_init_minishell(envp);
+	ft_setup_signals();
 	ft_process_minishell(data);
 	return (0);
 }

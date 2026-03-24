@@ -85,6 +85,12 @@ t_token	*ft_tokenizer(char *command_line)
 		else if (ft_is_in_charset(command_line[i], "|<>&()"))
 		{
 			value = ft_extract_operator(command_line, &i);
+			if (value[0] == '&' && value[1] == '\0')
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token `&'\n", STDERR_FILENO);
+				free(value);
+				return (ft_free_tokens(tokens));
+			}
 			new_token = ft_new_token(value, ft_get_token_type(value));
 			ft_token_add_back(&tokens, new_token);
 		}
