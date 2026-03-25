@@ -6,12 +6,16 @@
 /*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:14:11 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/25 13:03:26 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_H
 # define DATA_H
+
+typedef struct s_env_node					t_env_node;
+
+typedef struct s_hash_table					t_hash_table;
 
 typedef enum e_token_type					t_token_type;
 
@@ -32,6 +36,20 @@ typedef struct s_redir_data					t_redir_data;
 typedef struct s_ast						t_ast;
 
 typedef struct s_minishell					t_minishell;
+
+struct s_env_node
+{
+	char		*key;
+	char		*value;
+	t_env_node	*next;
+};
+
+struct s_hash_table
+{
+	t_env_node	**items;
+	const int	size;
+	int			count;
+};
 
 enum e_token_type
 {

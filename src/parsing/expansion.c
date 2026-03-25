@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:34:48 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/25 13:26:36 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,37 @@ char	*ft_remove_quotes(char *original)
 // • Handle " (double quote) which should prevent the shell from interpreting the meta-
 // characters in the quoted sequence except for $ (dollar sign)
 
-// this algorithm (k=33) was first reported by dan bernstein many years ago in 
-// comp.lang.c. another version of this algorithm (now favored by bernstein) 
-// uses xor: hash(i) = hash(i - 1) * 33 ^ str[i]; the magic of number 33 (why 
-// it works better than many other constants, prime or not) has never been 
-// adequately explained.
 
-//     unsigned long
-//     hash(unsigned char *str)
-//     {
-//         unsigned long hash = 5381;
-//         int c;
 
-//         while (c = *str++)
-//             hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-
-//         return hash;
-//     }
-
-// expendre une variable pour trouver sa valeur grace a une hash map
-void	ft_djb2()
+/**
+ * this algorithm (k=33) was first reported by dan bernstein many years ago in 
+ * comp.lang.c. another version of this algorithm (now favored by bernstein) 
+ * uses xor: hash(i) = hash(i - 1) * 33 ^ str[i]; the magic of number 33 (why 
+ * it works better than many other constants, prime or not) has never been 
+ * adequately explained.
+ */
+unsigned long	ft_hash_djb2(unsigned char *str)
 {
+	unsigned long	hash;
+	int				c;
 
+	hash = 5381;
+	while (*str)
+	{
+		c = *str;
+		hash =  ((hash << 5) + hash) + c;
+		str++;
+	}
+	return (hash);
 }
 
+// index = hash % table_size
 void	ft_expand_variables(t_ast *ast, t_minishell *data)
 {
-	(void)ast;
+	if (ast->type == NODE_COMMAND || ast->type == NODE_REDIR_OUT 
+		|| ast->type == NODE_REDIR_IN || ast->type == NODE_APPEND)
+	{
+		//rechercher si on a des valeurs qui commencent par $, si oui, chercher la valeur correspondante dans la hash map
+	}
 	(void)data;
 }

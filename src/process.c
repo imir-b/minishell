@@ -6,7 +6,7 @@
 /*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/20 02:16:46 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/25 11:55:59 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_process_command_line(char *command_line, t_minishell *data)
 	printf("\n--- AST ---\n"); // debug
 	ft_print_ast(data->ast, 0); // debug
 	printf("-----------\n\n"); // debug
+	ft_free_tokens(tokens);
 	ft_expand_variables(data->ast, data);
 	ft_execute(data);
 }

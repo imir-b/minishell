@@ -6,7 +6,7 @@
 /*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 04:16:06 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/20 14:46:06 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/25 12:05:47 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ void	ft_handle_sigint(int sig)
 	}
 }
 
-void	ft_setup_signals(void)
+int	ft_setup_signals(void)
 {
 	struct	sigaction	sa;
 
 	sa.sa_handler = ft_handle_sigint;
-	sigemptyset(&sa.sa_mask);
+	if (sigemptyset(&sa.sa_mask) == -1)
+		return (1);
 	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		return (1);
 	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		return (1);
+	return (0);
 }
