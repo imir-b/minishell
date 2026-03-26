@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/25 13:03:26 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 11:28:38 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ struct s_redir_data
 
 struct s_minishell
 {
-	char	**envp;
-	char	**paths;
-	t_ast	*ast;
+	char			**envp;
+	char			**paths;
+	t_ast			*ast;
+	t_hash_table	*hash_map;
 };
 
 #endif

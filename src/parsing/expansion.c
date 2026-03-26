@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/25 23:05:02 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 12:13:32 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,42 +26,37 @@ char	*ft_remove_quotes(char *original)
 	return (ret);
 }
 
+
+/*
+Étape 1 : Il gère d'abord les accolades {}.
+
+Étape 2 : Il fait les remplacements de variables $VAR, de tilde ~ et de calculs $(()). (Tout ça en même temps).
+
+Étape 3 : Il fait le Word Splitting. C'est super important : il regarde s'il y a des espaces générés par l'étape 2, et si oui, il découpe ta chaîne en plusieurs arguments.
+
+Étape 4 : Il gère les astérisques * pour chercher les fichiers (Pathname).
+ */
+
 //  Handle ’ (single quote) which should prevent the shell from interpreting the meta-
 // characters in the quoted sequence.
 // • Handle " (double quote) which should prevent the shell from interpreting the meta-
 // characters in the quoted sequence except for $ (dollar sign)
 
-
+// index = hash % table_size
 
 /**
- * this algorithm (k=33) was first reported by dan bernstein many years ago in 
- * comp.lang.c. another version of this algorithm (now favored by bernstein) 
- * uses xor: hash(i) = hash(i - 1) * 33 ^ str[i]; the magic of number 33 (why 
- * it works better than many other constants, prime or not) has never been 
- * adequately explained.
+ * On navigue dans tout l'ast pour chercher des variables (qui commencent
+ * par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
  */
-unsigned long	ft_hash_djb2(unsigned char *str)
+void	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
 {
-	unsigned long	hash;
-	int				c;
-
-	hash = 5381;
-	while (*str)
-	{
-		c = *str;
-		hash =  ((hash << 5) + hash) + c;
-		str++;
-	}
-	return (hash);
-}
-
-// index = hash % table_size
-void	ft_expand_variables(t_ast *ast, t_minishell *data)
-{
-	if (ast->type == NODE_COMMAND || ast->type == NODE_REDIR_OUT 
-		|| ast->type == NODE_REDIR_IN || ast->type == NODE_APPEND)
-	{
-		//rechercher si on a des valeurs qui commencent par $, si oui, chercher la valeur correspondante dans la hash map
-	}
-	(void)data;
+	if (!node)
+		return ;
+	ft_expand_tree(node->left, hash_map);
+	ft_expand_tree(node->right, hash_map);
+	if (node->type == NODE_COMMAND)
+		;
+	else if (node->type == NODE_REDIR_OUT || node->type == NODE_REDIR_IN
+		|| node->type == NODE_APPEND)
+		;
 }

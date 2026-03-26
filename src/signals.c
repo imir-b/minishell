@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 04:16:06 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/25 12:05:47 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 11:40:27 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_handle_sigint(int sig)
 
 int	ft_setup_signals(void)
 {
-	struct	sigaction	sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = ft_handle_sigint;
 	if (sigemptyset(&sa.sa_mask) == -1)

@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/08 15:07:03 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 11:15:10 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/03/26 11:15:07 by vbleskin          #+#    #+#             */
+/*   Updated: 2026/03/26 11:16:30 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+int	ft_syntax_error(char *token_value)
 {
-	t_minishell	*data;includ
-
-	if (ac > 1)
-		return (1);
-	(void)av;
-	data = ft_init_minishell(envp);
-	ft_setup_signals();
-	ft_process_minishell(data);
-	return (0);
+	ft_putstr_fd("minishell: syntax error near unexpected token `",
+		STDERR_FILENO);
+	ft_putstr_fd(token_value, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	return (1);
 }

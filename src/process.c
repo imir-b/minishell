@@ -3,48 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/25 11:55:59 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 11:15:50 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_syntax_error(char *token_value)
-{
-	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
-	ft_putstr_fd(token_value, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
-	return (1);
-}
-
 int	ft_check_syntax(t_token *tokens)
 {
-	if (tokens->type == TOK_PIPE || tokens->type == TOK_AND || tokens->type == TOK_OR)
-        return (ft_syntax_error(tokens->value));
-    while (tokens)
-    {
-        if (tokens->type >= TOK_REDIR_IN && tokens->type <= TOK_HEREDOC)
-        {
-            if (!tokens->next || tokens->next->type != TOK_WORD)
-                return (ft_syntax_error("newline or redirection file"));
-        }
-        if (tokens->type == TOK_PIPE || tokens->type == TOK_AND || tokens->type == TOK_OR)
-        {
-            if (!tokens->next || tokens->next->type == TOK_PIPE 
-				|| tokens->next->type == TOK_AND || tokens->next->type == TOK_OR)
+	if (tokens->type == TOK_PIPE || tokens->type == TOK_AND
+		|| tokens->type == TOK_OR)
+		return (ft_syntax_error(tokens->value));
+	while (tokens)
+	{
+		if (tokens->type >= TOK_REDIR_IN && tokens->type <= TOK_HEREDOC)
+		{
+			if (!tokens->next || tokens->next->type != TOK_WORD)
+				return (ft_syntax_error("newline or redirection file"));
+		}
+		if (tokens->type == TOK_PIPE || tokens->type == TOK_AND
+			|| tokens->type == TOK_OR)
+		{
+			if (!tokens->next || tokens->next->type == TOK_PIPE
+				|| tokens->next->type == TOK_AND
+				|| tokens->next->type == TOK_OR)
 			{
 				if (tokens->next)
 					return (ft_syntax_error(tokens->next->value));
 				else
 					return (ft_syntax_error("newline"));
 			}
-        }
-        tokens = tokens->next;
-    }
-    return (0);
+		}
+		tokens = tokens->next;
+	}
+	return (0);
 }
 
 void	ft_process_command_line(char *command_line, t_minishell *data)
