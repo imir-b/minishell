@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:46:41 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:46:47 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 16:10:32 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	ft_cut_list(t_token *op)
 		op->next->prev = NULL;
 }
 
-t_ast	*ft_create_and_or_node(t_token *current, t_token *first, t_minishell *data)
+t_ast	*ft_create_and_or_node(t_token *current, t_token *first,
+			t_minishell *data)
 {
 	t_ast	*node;
 	t_token	*first_right;
@@ -43,7 +44,8 @@ t_ast	*ft_create_and_or_node(t_token *current, t_token *first, t_minishell *data
 	return (node);
 }
 
-t_ast	*ft_create_pipe_node(t_token *current, t_token *first, t_minishell *data)
+t_ast	*ft_create_pipe_node(t_token *current, t_token *first,
+			t_minishell *data)
 {
 	t_ast	*node;
 	t_token	*first_right;

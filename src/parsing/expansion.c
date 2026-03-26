@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 15:24:44 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:49:46 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ char	*ft_remove_quotes(char *original)
 	ret = malloc(sizeof(char) * (len - 1));
 	return (ret);
 }
+/*
+Etape 1 : expand variables
+Etape 2 : word splitting
+Etape 3 : wildcards
+Etape 4 : remove quotes
 
-// Étape 1 : Il gère d'abord les accolades {}.
+- Handle ’ (single quote) which should prevent the shell from 
+interpreting the meta-characters in the quoted sequence.
 
-// Étape 2 : Il fait les remplacements de variables $VAR, de tilde ~ et de calculs $(()). (Tout ça en même temps).
+- Handle " (double quote) which should prevent the shell from
+interpreting the meta-characters in the quoted sequence except 
+for $ (dollar sign)
 
-// Étape 3 : Il fait le Word Splitting. C'est super important : il regarde s'il y a des espaces générés par l'étape 2, et si oui, il découpe ta chaîne en plusieurs arguments.
 
-// Étape 4 : Il gère les astérisques * pour chercher les fichiers (Pathname).
-
-//  Handle ’ (single quote) which should prevent the shell from interpreting the meta-
-// characters in the quoted sequence.
-// • Handle " (double quote) which should prevent the shell from interpreting the meta-
-// characters in the quoted sequence except for $ (dollar sign)
-
-// index = hash % table_size
+*/
 
 /**
  * On navigue dans tout l'ast pour chercher des variables (qui commencent

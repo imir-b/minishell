@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 23:16:23 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 15:36:44 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_token	*ft_tokenizer(char *command_line)
 			value = ft_extract_operator(command_line, &i);
 			if (value[0] == '&' && value[1] == '\0')
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `&'\n", STDERR_FILENO);
+				ft_syntax_error("&");
 				free(value);
 				return (ft_free_tokens(tokens));
 			}

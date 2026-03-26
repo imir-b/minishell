@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 15:25:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:38:14 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ int			ft_is_space(char c);
 int			ft_is_in_charset(char c, char *charset);
 char		*ft_extract_word(char *command_line, int *i);
 char		*ft_extract_operator(char *command_line, int *i);
+t_token		*ft_new_token(char *value, t_token_type type);
+void		ft_token_add_back(t_token **tokens, t_token *new_token);
 t_token		*ft_tokenizer(char *command_line);
 void		*ft_free_tokens(t_token *tokens);
 void		ft_break_circle(t_token *first);
 void		ft_free_ast(t_ast *self);
+
 
 t_ast		*ft_create_and_or_node(t_token *current, t_token *first,
 				t_minishell *data);

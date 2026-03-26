@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_node.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:45:39 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 14:45:41 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 16:14:12 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,15 @@ t_ast	*ft_create_subshell_node(t_token *current, t_minishell *data)
 
 	r_paren = ft_find_matching_paren(current);
 	if (!r_paren)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-		return (NULL);
-	}
+		return (ft_syntax_error("newline"), NULL);
 	if (r_paren == current->next)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `)'\n", STDERR_FILENO);
-		return (NULL);
-	}
+		return (ft_syntax_error(")"), NULL);
 	inside_content = current->next;
 	after_subshell = r_paren->next;
 	if (after_subshell && (after_subshell->type == TOK_WORD
 			|| after_subshell->type == TOK_L_PAREN
 			|| after_subshell->type == TOK_R_PAREN))
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
-		if (after_subshell->value)
-			ft_putstr_fd(after_subshell->value, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-		return (NULL);
-	}
+		return (ft_syntax_error(after_subshell->value), NULL);
 	r_paren->prev->next = NULL;
 	if (after_subshell)
 		after_subshell->prev = NULL;

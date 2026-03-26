@@ -3,11 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:01 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 03:47:04 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 16:07:04 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//entre dans un repo
+// cd . et cd .. pour retour en arriere

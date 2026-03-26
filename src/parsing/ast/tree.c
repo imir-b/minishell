@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:05:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:46:36 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 16:10:03 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_token	*ft_find_operator(t_token *first, t_token_type type1, t_token_type type2)
+static t_token	*ft_find_operator(t_token *first, t_token_type type1,
+					t_token_type type2)
 {
 	t_token	*current;
 
