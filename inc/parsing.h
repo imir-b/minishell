@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:22:03 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/26 15:25:47 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ void		*ft_free_tokens(t_token *tokens);
 void		ft_break_circle(t_token *first);
 void		ft_free_ast(t_ast *self);
 
-t_ast		*ft_create_and_or_node(t_token *current, t_token *first, t_minishell *data);
-t_ast		*ft_create_pipe_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_and_or_node(t_token *current, t_token *first,
+				t_minishell *data);
+t_ast		*ft_create_pipe_node(t_token *current, t_token *first,
+				t_minishell *data);
 t_ast		*ft_create_subshell_node(t_token *current, t_minishell *data);
-t_ast		*ft_create_redir_node(t_token *current, t_token *first, t_minishell *data);
+t_ast		*ft_create_redir_node(t_token *current, t_token *first,
+				t_minishell *data);
 t_ast		*ft_create_command_node(t_token *first, t_minishell *data);
 t_ast		*ft_create_tree(t_token *tokens, t_minishell *data);
-void		ft_expand_variables(t_ast *ast, t_minishell *data);
+void		ft_expand_tree(t_ast *node, t_hash_table *hash_map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 11:33:28 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/26 12:32:16 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:21:30 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,56 @@ unsigned long	ft_hash_djb2(unsigned char *str)
 	return (hash);
 }
 
+void	ft_fill_item(t_env_node **items, char *key, char *value)
+{
+	unsigned long	hash;
+	int				index;
+
+	index = 0;
+	hash = ft_hash_djb2(key);
+	index = hash % HASH_SIZE;
+	if (!items[index])
+		items[index] = (t_env_node *){key, value, NULL};
+	else
+	{
+		while (items[index])
+			items[index] = items[index]->next;
+	}
+}
+
+char	*ft_dup_key(char *env)
+{
+	int		i;
+	char	*key;
+
+	i = 0;
+	while (env[i] && env[i] != '=')
+		i++;
+	key = malloc(sizeof(char) * (i + 1));
+	if (!key)
+		return (NULL);
+	i = 0;
+	while (env[i] && env[i] != '=')
+		key[i] = env[i];
+	return (key);
+}
+
 t_hash_table	*ft_init_hash_map(char **envp)
 {
 	t_hash_table	*hash_map;
 	t_env_node		**items;
-	int				index;
-	unsigned long	hash;
+	char			*key;
+	char			*value;
+	int				count;
 
-	while (envp)
+	count = 0;
+	while (envp[count])
 	{
-
-		index = hash % HASH_SIZE;
-		if (items[index])
-			items[index] = ft_find_next_empty();
-		items[index] = ;
+		key = ft_dup_key(envp[count]);
+		value = ft_strdup((ft_strchr(envp[count], '=')) + 1);
+		ft_fill_item(items, key, value);
+		count++;
 	}
-	hash_map = (t_hash_table *){0, items, HASH_SIZE};
+	hash_map = (t_hash_table *){count, items, HASH_SIZE};
 	return (hash_map);
 }

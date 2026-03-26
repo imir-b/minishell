@@ -6,19 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:50:10 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/18 04:10:32 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:23:16 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * Affiche le bandeau ascii au lancement de minishell
- */
-void	ft_print_ascii(void)
-{
-	write(1, "MINISHELL\n", 10);
-}
 
 /**
  * Fonction pour recuperer la ligne commencant par 'PATH=' dans l'environnement
@@ -47,10 +39,11 @@ t_minishell	*ft_init_minishell(char **envp)
 	t_minishell	*data;
 
 	data = malloc(sizeof(t_minishell) * 1);
-	data->envp = envp;
 	data->paths = ft_split(ft_find_path(envp), ':');
 	if (!data->paths)
 		return (ft_free_data(data));
-	ft_print_ascii();
+	data->hash_map = ft_init_hash_map(envp);
+	if (!data->hash_map)
+		return (ft_free_data(data));
 	return (data);
 }

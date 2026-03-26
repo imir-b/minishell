@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 15:07:03 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 11:15:10 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:53:34 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_minishell	*data;includ
+	t_minishell	*data;
 
 	if (ac > 1)
 		return (1);
 	(void)av;
 	data = ft_init_minishell(envp);
 	ft_setup_signals();
+	ft_print_ascii();
 	ft_process_minishell(data);
 	return (0);
 }

@@ -6,11 +6,19 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/26 11:15:50 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:28:16 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * Affiche le bandeau ascii au lancement de minishell
+ */
+void	ft_print_ascii(void)
+{
+	write(1, "MINISHELL\n", 10);
+}
 
 int	ft_check_syntax(t_token *tokens)
 {
@@ -42,28 +50,25 @@ int	ft_check_syntax(t_token *tokens)
 	return (0);
 }
 
-void	ft_process_command_line(char *command_line, t_minishell *data)
+int	ft_process_command_line(char *command_line, t_minishell *data)
 {
 	t_token	*tokens;
 
 	tokens = ft_tokenizer(command_line);
 	if (!tokens)
-		return ;
-	ft_print_tokens(tokens); // debug
+		return (1);
+	// ft_print_tokens(tokens); // debug
 	ft_break_circle(tokens);
 	if (ft_check_syntax(tokens))
-	{
-		ft_free_tokens(tokens);
-		return ;
-	}
+		return (ft_free_tokens(tokens), 1);
 	data->ast = ft_create_tree(tokens, data);
 	if (!data->ast)
-		return ;
-	printf("\n--- AST ---\n"); // debug
-	ft_print_ast(data->ast, 0); // debug
-	printf("-----------\n\n"); // debug
+		return (ft_free_tokens(tokens), 1);
+	// printf("\n--- AST ---\n"); // debug
+	// ft_print_ast(data->ast, 0); // debug
+	// printf("-----------\n\n"); // debug
 	ft_free_tokens(tokens);
-	ft_expand_variables(data->ast, data);
+	ft_expand_tree(data->ast, data->hash_map);
 	ft_execute(data);
 }
 
