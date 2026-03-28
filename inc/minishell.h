@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 12:24:59 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/28 16:18:26 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <errno.h>
 
 # include "libft.h"
 
