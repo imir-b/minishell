@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 22:49:50 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/19 22:49:50 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/27 16:15:37 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_free_ast(t_ast *self)
 	if (self->type == NODE_COMMAND)
 		free_cmd_data(self->cmd_data);
 	else if (self->type == NODE_REDIR_IN || self->type == NODE_REDIR_OUT
-			|| self->type == NODE_APPEND || self->type == NODE_HEREDOC)
+		|| self->type == NODE_APPEND || self->type == NODE_HEREDOC)
 		free_redir_data(self->redir_data);
 	free(self);
 }

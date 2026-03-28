@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 15:38:14 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:42:49 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,36 @@
 
 # include "minishell.h"
 
-int			ft_is_space(char c);
+int						ft_is_space(char c);
 
 /**
  * Fonction utilitaire qui cherche 'c' dans 'charset' et renvoie 1 si trouve.
  */
-int			ft_is_in_charset(char c, char *charset);
-char		*ft_extract_word(char *command_line, int *i);
-char		*ft_extract_operator(char *command_line, int *i);
-t_token		*ft_new_token(char *value, t_token_type type);
-void		ft_token_add_back(t_token **tokens, t_token *new_token);
-t_token		*ft_tokenizer(char *command_line);
-void		*ft_free_tokens(t_token *tokens);
-void		ft_break_circle(t_token *first);
-void		ft_free_ast(t_ast *self);
+int						ft_is_in_charset(char c, char *charset);
+char					*ft_extract_word(char *command_line, int *i);
+char					*ft_extract_operator(char *command_line, int *i);
+t_token					*ft_new_token(char *value, t_token_type type);
+void					ft_token_add_back(t_token **tokens, t_token *new_token);
+t_token					*ft_tokenizer(char *command_line);
+void					*ft_free_tokens(t_token *tokens);
+void					ft_break_circle(t_token *first);
+void					ft_free_ast(t_ast *self);
 
 
-t_ast		*ft_create_and_or_node(t_token *current, t_token *first,
-				t_minishell *data);
-t_ast		*ft_create_pipe_node(t_token *current, t_token *first,
-				t_minishell *data);
-t_ast		*ft_create_subshell_node(t_token *current, t_minishell *data);
-t_ast		*ft_create_redir_node(t_token *current, t_token *first,
-				t_minishell *data);
-t_ast		*ft_create_command_node(t_token *first, t_minishell *data);
-t_ast		*ft_create_tree(t_token *tokens, t_minishell *data);
-void		ft_expand_tree(t_ast *node, t_hash_table *hash_map);
+t_ast					*ft_create_and_or_node(t_token *current, t_token *first,
+							t_minishell *data);
+t_ast					*ft_create_pipe_node(t_token *current, t_token *first,
+							t_minishell *data);
+t_ast					*ft_create_subshell_node(t_token *current,
+							t_minishell *data);
+t_ast					*ft_create_redir_node(t_token *current, t_token *first,
+							t_minishell *data);
+t_ast					*ft_create_command_node(t_token *first,
+							t_minishell *data);
+t_ast					*ft_create_tree(t_token *tokens, t_minishell *data);
+
+void					ft_expand_tree(t_ast *node, t_hash_table *hash_map);
+unsigned long			ft_hash_djb2(unsigned char *str);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:44:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 00:44:45 by vlad             ###   ########.fr       */
+/*   Updated: 2026/03/27 16:16:39 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ static void	ft_fill_redir(t_node_type type, char *file, int flags, t_ast *node)
 	node->redir_data->flags = flags;
 }
 
-t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name, t_token *first)
+t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name,
+			t_token *first)
 {
-	t_token *prev_tok;
-	t_token *next_tok;
+	t_token	*prev_tok;
+	t_token	*next_tok;
 
 	prev_tok = op->prev;
 	next_tok = file_name->next;
@@ -35,7 +36,8 @@ t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name, t_token *first
 	return (first);
 }
 
-t_ast	*ft_create_redir_node(t_token *current, t_token *first, t_minishell *data)
+t_ast	*ft_create_redir_node(t_token *current, t_token *first,
+			t_minishell *data)
 {
 	t_ast	*node;
 	t_token	*file_name;
