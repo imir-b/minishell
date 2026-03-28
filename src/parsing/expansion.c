@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/27 17:41:18 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/03/28 22:44:29 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,30 @@
 char	*ft_remove_quotes(char **original)
 {
 
+}
+
+static char	*ft_dup_key(char *cursor)
+{
+	char	*key;
+	int		len;
+	int		i;
+
+	i = 0;
+	if (*cursor == '$')
+		cursor++;
+	len = ft_key();
+	key = malloc(sizeof(char) * (len + 1));
+	if (!key)
+		return (NULL);
+	if (*cursor && *cursor >= 'A' && *cursor <= 'Z')
+		key[i++] = (*cursor)++;
+	while (*cursor && ((*cursor >= 'A' && *cursor <= 'Z')
+			|| (*cursor >= '0' && *cursor <= '9')))
+	{
+		key[i++] = *cursor;
+		cursor++;
+	}
+	return (key);
 }
 
 /*
@@ -39,23 +63,12 @@ for $ (dollar sign)
 
 char	**ft_expand_variable(char *cursor, t_hash_table *h_map)
 {
-	char	**args;
-	char	*key;
-	int		index;
 	t_env_node	*current;
+	char		**args;
+	char		*key;
+	int			index;
 
-	index = 0;
-	if (*cursor == '$')
-		cursor++;
-	key = malloc(sizeof(char) * (len + 1));
-	if (*cursor && *cursor >= 'A' && *cursor <= 'Z')
-		key[index++] = (*cursor)++;
-	while (*cursor && ((*cursor >= 'A' && *cursor <= 'Z')
-			|| (*cursor >= '0' && *cursor <= '9')))
-	{
-		key[index++] = *cursor;
-		cursor++;
-	}
+	key = ft_dup_key(cursor);
 	index = ft_hash_djb2(key) % HASH_SIZE;
 	if (!h_map->items[index])
 		return ;
