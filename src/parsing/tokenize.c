@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/09 11:01:31 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 15:36:44 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/03/09 11:01:31 by username          #+#    #+#             */
+/*   Updated: 2026/04/03 01:42:01 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token_type	ft_get_token_type(char *value)
 		return (TOK_PIPE);
 	else if (value[0] == '>' && value[1] == '>')
 		return (TOK_APPEND);
-	else if (value[0] == '>')
+	else if (value[0] == '>') 
 		return (TOK_REDIR_OUT);
 	else if (value[0] == '<' && value[1] == '<')
 		return (TOK_HEREDOC);
@@ -33,40 +33,6 @@ t_token_type	ft_get_token_type(char *value)
 	else if (value[0] == ')')
 		return (TOK_R_PAREN);
 	return (TOK_WORD);
-}
-
-t_token	*ft_new_token(char *value, t_token_type type)
-{
-	t_token	*new_node;
-
-	new_node = malloc(sizeof(t_token));
-	if (!new_node)
-		return (NULL);
-	new_node->value = value;
-	new_node->type = type;
-	new_node->next = NULL;
-	new_node->prev = NULL;
-	return (new_node);
-}
-
-void	ft_token_add_back(t_token **tokens, t_token *new_token)
-{
-	t_token	*old_last;
-
-	if (!tokens || !new_token)
-		return ;
-	if (!*tokens)
-	{
-		*tokens = new_token;
-		new_token->next = new_token;
-		new_token->prev = new_token;
-		return ;
-	}
-	old_last = (*tokens)->prev;
-	old_last->next = new_token;
-	new_token->prev = old_last;
-	new_token->next = *tokens;
-	(*tokens)->prev = new_token;
 }
 
 t_token	*ft_tokenizer(char *command_line)
