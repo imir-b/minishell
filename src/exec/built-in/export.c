@@ -6,10 +6,10 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:21 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 16:02:46 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:48:37 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//cree un nouvelle variable d'environnement
+//cree un nouvelle variable d'environnement dans hashmap

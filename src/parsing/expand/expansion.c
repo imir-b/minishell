@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/03 01:28:32 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:52:35 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ for $ (dollar sign)
 
 char	*ft_expand_wildcards(char *original)
 {
-
+	
 }
 
 t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
