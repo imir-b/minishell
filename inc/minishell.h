@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/28 16:18:26 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/06 19:08:04 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,10 @@ void			ft_print_ast(t_ast *node, int level);
 
 /* Error */
 int				ft_syntax_error(char *token_value);
+int				ft_ambiguous_redirect_err(char *str);
+
+/* Free */
+void			ft_free_tab(char **tab);
+
 
 #endif

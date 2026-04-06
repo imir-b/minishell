@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/03 00:29:34 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:10:10 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	ft_process_command_line(char *command_line, t_minishell *data)
 	ft_print_ast(data->ast, 0); // debug
 	printf("-----------\n\n");	// debug
 	ft_free_tokens(tokens);
-	// ft_expand_tree(data->ast, data->hash_map);
+	if (ft_expand_tree(data->ast, data->hash_map))
+		return (1);
 	ft_execute(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/01 13:31:22 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:12:23 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ t_ast					*ft_create_command_node(t_token *first,
 							t_minishell *data);
 t_ast					*ft_create_tree(t_token *tokens, t_minishell *data);
 
-void					ft_expand_tree(t_ast *node, t_hash_table *hash_map);
+int						ft_expand_tree(t_ast *node, t_hash_table *hash_map);
 unsigned long			ft_hash_djb2(unsigned char *str);
 char					*ft_extract_key(char *str);
-
+char					*ft_expand_single_arg(char *arg,
+							t_hash_table *hash_map);
+char					**ft_word_splitting(char **args);
+char					**ft_expand_wildcards(char **args);
+char					**ft_remove_quotes(char **args);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/03 14:52:35 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:13:09 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Etape 2 : word splitting
 Etape 3 : wildcards
 Etape 4 : remove quotes
 
-// stocker et recuperer le code erreur de la derniere commande si ?$
+// TODO ->>>> stocker et recuperer le code erreur de la derniere commande si ?$
 */
 
 /*
@@ -29,118 +29,83 @@ interpreting the meta-characters in the quoted sequence except
 for $ (dollar sign)
 */
 
-char	*ft_expand_wildcards(char *original)
+int	ft_check_ambiguous_redirect(char *expanded_file)
 {
-	
-}
+	int	i;
+	int	quotes;
 
-t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
-{
-	t_env_node	*current;
-	char		*key;
-	int			index;
-
-	key = ft_extract_key(cursor);
-	index = ft_hash_djb2(key) % HASH_SIZE;
-	if (!h_map->items[index])
-		return (free(key), NULL);
-	current = h_map->items[index];
-	while (current && ft_strcmp(current->key, key) != 0)
-		current = current->next;
-	free(key);
-	if (current)
-		return (current);
-	return (NULL);
-}
-
-int	ft_expanded_len(char *arg, t_hash_table *hash_map)
-{
-	int			i;
-	int			single_quote;
-	int			len;
-	t_env_node	*var_data;
-
-	((i = ((len = 0))));
-	while (arg[i])
+	if (expanded_file[0] == '\0')
+		return (1);
+	i = 0;
+	quotes = 0;
+	while (expanded_file[i])
 	{
-		if (arg[i] == '\'')
-			single_quote = !single_quote;
-		if (arg[i] == '\'' || arg[i] == '\"') //verifier aussi qu on est pas dans des quotes pour pas skip les quotes dans les quotes
-			i++;
-		else if (arg[i] == '$' && !single_quote)
+		if ((expanded_file[i] == '\'' || expanded_file[i] == '\"')
+			&& (!quotes || quotes == expanded_file[i]))
 		{
-			i++;
-			var_data = ft_expand_variable(&(arg[i]), hash_map);
-			i += ft_strlen(var_data->key);
-			len += ft_strlen(var_data->value);
+			quotes ^= expanded_file[i];
 		}
-		else
-		{
-			len++;
-			i++;
-		}
+		if ((expanded_file[i] == ' ' || expanded_file[i] == '\t') && !quotes)
+			return (1);
+		i++;
 	}
-	return (len);
+	return (0);
 }
 
-char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
+static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 {
-	t_env_node	*var_data;
-	int			i;
-	int			j;
-	int			k;
-	int			single_quote;
-	int			len;
-	char		*ret;
+	int		i;
+	char	*new;
 
-	((single_quote = ((i = ((j = 0))))));
-	len = ft_expanded_len(arg, hash_map);
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		return (NULL);
-	while (arg[i])
+	i = 0;
+	while (node->cmd_data->args[i])
 	{
-		if (arg[i] == '\'')
-			single_quote = !single_quote;
-		if (arg[i] == '\'' || arg[i] == '\"')
-			i++;
-		else if (arg[i] == '$' && !single_quote)
-		{
-			k = 0;
-			i++;
-			var_data = ft_expand_variable(&(arg[i]), hash_map);
-			if (!var_data) // gerer differement si key n existe pas ?
-				continue ;
-			i += ft_strlen(var_data->key);
-			while (var_data->value[k])
-				ret[j++] = var_data->value[k++];
-		}
-		else
-			ret[j++] = arg[i++];
+		new = ft_expand_single_arg(node->cmd_data->args[i], map);
+		free(node->cmd_data->args[i]);
+		node->cmd_data->args[i++] = new;
 	}
-	ret[j] = '\0';
-	return (ret);
+	node->cmd_data->args = ft_word_splitting(node->cmd_data->args);
+	node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
+	node->cmd_data->args = ft_remove_quotes(node->cmd_data->args);
+	return (0);
+}
+
+static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
+{
+	char	*original;
+	char	*new;
+
+	original = ft_strdup(node->redir_data->file);
+	new = ft_expand_single_arg(node->redir_data->file, map);
+	free(node->redir_data->file);
+	node->redir_data->file = new;
+	if (ft_check_ambiguous_redirect(node->redir_data->file))
+		return (ft_ambiguous_redirect_err(original));
+	node->redir_data->file = ft_remove_quotes(node->redir_data->file);
+	free(original);
+	return (0);
 }
 
 /**
-* On navigue dans tout l'ast pour chercher des variables (qui commencent
-* par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
-*/
-void	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
+ * On navigue dans tout l'ast pour chercher des variables (qui commencent
+ * par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
+ */
+int	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
 {
-	int		i;
-
 	if (!node)
-		return ;
+		return (0);
 	ft_expand_tree(node->left, hash_map);
 	ft_expand_tree(node->right, hash_map);
-	i = 0;
 	if (node->type == NODE_COMMAND)
 	{
-		while (node->cmd_data->args[i])
-			ft_expand_single_arg(node->cmd_data->args[i++], hash_map);
+		if (ft_expand_cmd_node(node, hash_map))
+			return (1);
 	}
 	else if (node->type == NODE_REDIR_OUT || node->type == NODE_REDIR_IN
 		|| node->type == NODE_APPEND)
-		ft_expand_single_arg(node->redir_data->file, hash_map);
+	{
+		if (ft_expand_redir_node(node, hash_map))
+			return (1);
+	}
+	return (0);
 }
