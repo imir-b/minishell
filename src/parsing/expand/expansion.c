@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/07 14:14:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:48:12 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,12 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 		node->cmd_data->args[i++] = new;
 	}
 	node->cmd_data->args = ft_word_splitting(node->cmd_data->args);
-	node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
-	node->cmd_data->args = ft_remove_quotes_array(node->cmd_data->args);
+	// node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
+	// node->cmd_data->args = ft_remove_quotes_array(node->cmd_data->args);
+	if (node->cmd_data->args && node->cmd_data->args[0])
+		node->cmd_data->cmd = node->cmd_data->args[0];
+	else
+		node->cmd_data->cmd = NULL;
 	return (0);
 }
 
@@ -81,7 +85,7 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	node->redir_data->file = new;
 	if (ft_check_ambiguous_redirect(node->redir_data->file))
 		return (ft_ambiguous_redirect_err(original));
-	node->redir_data->file = ft_remove_quotes(node->redir_data->file);
+	// node->redir_data->file = ft_remove_quotes(node->redir_data->file);
 	free(original);
 	return (0);
 }

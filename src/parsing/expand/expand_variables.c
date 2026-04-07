@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:05:34 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/07 14:11:24 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:38:42 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	ft_expanded_len(char *arg, t_hash_table *hash_map)
 	while (arg[i])
 	{
 		if (arg[i] == '\'')
+		{
 			single_quote = !single_quote;
+			len++;
+			i++;
+		}
 		else if (arg[i] == '$' && !single_quote)
 		{
 			key = ft_extract_key(&(arg[++i]));
@@ -110,7 +114,10 @@ char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 	while (arg[i])
 	{
 		if (arg[i] == '\'')
+		{
 			single_quote = !single_quote;
+			ret[j++] = arg[i++];
+		}
 		else if (arg[i] == '$' && !single_quote)
 			ft_handle_dollar(arg, ret, &i, &j, hash_map);
 		else

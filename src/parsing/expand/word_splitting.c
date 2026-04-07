@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:49:58 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/06 19:10:44 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:49:26 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_count_words_array(char **strs)
 		j = 0;
 		while (strs[i][j] == ' ')
 			j++;
-		if (strs[i][0] != '\0')
+		if (strs[i][j] != '\0')
 			total_words++;
 		while (strs[i][j])
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:40:04 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 02:12:48 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/07 14:50:43 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ t_ast	*ft_create_command_node(t_token *first, t_minishell *data)
 	node->cmd_data = malloc(sizeof(t_cmd_data) * 1);
 	if (!node->cmd_data)
 		return (free(node), NULL);
-	node->cmd_data->cmd = first->value;
 	node->cmd_data->args = ft_create_args(first);
+	node->cmd_data->cmd = node->cmd_data->args[0];
 	node->cmd_data->path = ft_find_cmd_path(data->paths, first->value);
 	node->left = NULL;
 	node->right = NULL;
