@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 22:19:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 01:11:13 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/07 14:12:48 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ char		*ft_strrchr(const char *s, int c);
  * - return : la difference entre les deux premiers caracteres differents.
  */
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int			ft_strcmp(const char *s1, const char *s2);
 
 /**
  * Cherche une sous-chaine dans une chaine (taille limitee),

@@ -6,7 +6,7 @@
 #    By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/11 23:05:00 by vlad              #+#    #+#              #
-#    Updated: 2026/04/01 03:13:40 by vbleskin         ###   ########.fr        #
+#    Updated: 2026/04/07 14:09:39 by vbleskin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ INC_DIR			=	inc
 SUB_DIRS		=	data \
 					parsing \
 					parsing/ast \
+					parsing/expand \
 					exec \
 					builtin \
 					utils \

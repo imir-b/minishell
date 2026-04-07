@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/06 19:12:23 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:14:06 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char					*ft_expand_single_arg(char *arg,
 							t_hash_table *hash_map);
 char					**ft_word_splitting(char **args);
 char					**ft_expand_wildcards(char **args);
-char					**ft_remove_quotes(char **args);
+char					**ft_remove_quotes_array(char **args);
+char					*ft_remove_quotes(char *arg);
 
 #endif

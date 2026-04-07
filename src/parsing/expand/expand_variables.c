@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:05:34 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/06 19:15:31 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:11:24 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
 	int			index;
 
 	key = ft_extract_key(cursor);
-	index = ft_hash_djb2(key) % HASH_SIZE;
+	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
 	if (!h_map->items[index])
 		return (free(key), NULL);
 	current = h_map->items[index];

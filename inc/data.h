@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 15:19:58 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:31:33 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ struct s_env_node
 struct s_hash_table
 {
 	t_env_node	**items;
-	const int	size;
+	int	size;
 	int			count;
 };
 
