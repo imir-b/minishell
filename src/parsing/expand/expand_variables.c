@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:05:34 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/07 14:38:42 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/04/06 18:05:34 by username          #+#    #+#             */
+/*   Updated: 2026/04/09 16:54:42 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
 	int			index;
 
 	key = ft_extract_key(cursor);
-	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
+	index = ft_hash_djb2((unsigned char *) key) % HASH_SIZE;
 	if (!h_map->items[index])
 		return (free(key), NULL);
 	current = h_map->items[index];
@@ -71,8 +71,8 @@ int	ft_expanded_len(char *arg, t_hash_table *hash_map)
 	return (len);
 }
 
-static void	ft_handle_dollar(char *arg, char *ret, int *i, int *j,
-				t_hash_table *map)
+static void ft_handle_dollar(char * arg, char * ret, int * i, int * j,
+	t_hash_table	*map)
 {
 	char		*key;
 	t_env_node	*var_data;
@@ -87,7 +87,7 @@ static void	ft_handle_dollar(char *arg, char *ret, int *i, int *j,
 		return ;
 	}
 	(*i) += ft_strlen(key);
-	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
+	index = ft_hash_djb2((unsigned char *) key) % HASH_SIZE;
 	var_data = map->items[index];
 	while (var_data && ft_strcmp(var_data->key, key) != 0)
 		var_data = var_data->next;
@@ -102,10 +102,10 @@ static void	ft_handle_dollar(char *arg, char *ret, int *i, int *j,
 
 char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 {
-	int			i;
-	int			j;
-	int			single_quote;
-	char		*ret;
+	int		i;
+	int		j;
+	int		single_quote;
+	char	*ret;
 
 	single_quote = ((i = ((j = 0))));
 	ret = malloc(sizeof(char) * (ft_expanded_len(arg, hash_map) + 1));

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/07 14:48:12 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/09 17:35:09 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_check_ambiguous_redirect(char *expanded_file)
 	while (expanded_file[i])
 	{
 		if ((expanded_file[i] == '\'' || expanded_file[i] == '\"')
-			&& (!quotes || quotes == expanded_file[i]))
+				&& (!quotes || quotes == expanded_file[i]))
 		{
 			quotes ^= expanded_file[i];
 		}
@@ -65,7 +65,8 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 		node->cmd_data->args[i++] = new;
 	}
 	node->cmd_data->args = ft_word_splitting(node->cmd_data->args);
-	// node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
+	i = 0;
+	new = ft_expand_wildcards(node->cmd_data->args);
 	// node->cmd_data->args = ft_remove_quotes_array(node->cmd_data->args);
 	if (node->cmd_data->args && node->cmd_data->args[0])
 		node->cmd_data->cmd = node->cmd_data->args[0];
@@ -91,9 +92,10 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 }
 
 /**
- * On navigue dans tout l'ast pour chercher des variables (qui commencent
- * par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
- */
+* On navigue dans tout l'ast pour chercher des variables (qui commencent
+* par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
+*/
+
 int	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
 {
 	if (!node)
@@ -106,7 +108,7 @@ int	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
 			return (1);
 	}
 	else if (node->type == NODE_REDIR_OUT || node->type == NODE_REDIR_IN
-		|| node->type == NODE_APPEND)
+			|| node->type == NODE_APPEND)
 	{
 		if (ft_expand_redir_node(node, hash_map))
 			return (1);
