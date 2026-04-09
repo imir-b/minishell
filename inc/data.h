@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/07 14:31:33 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/09 18:17:15 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DATA_H
 
 /**
+ * --- t_env_node ---
  * Structure pour un item de la table de hachage :
  * - key : cle de la variable
  * - value : valeur de la variable
@@ -22,6 +23,7 @@
 typedef struct s_env_node					t_env_node;
 
 /**
+ * --- t_hash_table ---
  * Table de hachage pour stocker les variables d'environnement :
  * - items : table qui stock les variables
  * - size : la taille de la table
@@ -30,11 +32,13 @@ typedef struct s_env_node					t_env_node;
 typedef struct s_hash_table					t_hash_table;
 
 /**
+ * --- t_token_type ---
  * Liste des types de tokens
  */
 typedef enum e_token_type					t_token_type;
 
 /**
+ * --- t_token ---
  * Liste chainee pour stocker les tokens avant de construire l'ast :
  * - type : le type du token actuel
  * - value : contenu du token
@@ -44,11 +48,13 @@ typedef enum e_token_type					t_token_type;
 typedef struct s_token						t_token;
 
 /**
+ * --- t_node_type ---
  * Liste des types de noeuds pour l'ast
  */
 typedef enum e_node_type					t_node_type;
 
 /**
+ * --- t_cmd_data ---
  * Structure utilitaire pour les noeuds de type 'commandes' :
  * - cmd : la commande a executer
  * - args : la commande en char ** avec ses arguments
@@ -57,6 +63,7 @@ typedef enum e_node_type					t_node_type;
 typedef struct s_cmd_data					t_cmd_data;
 
 /**
+ * --- t_redir_data ---
  * Structure utilitaire pour les noeuds de type 'redirections' :
  * - file : le nom du fichier actuel
  * - flags : les flags a utiliser pour faire open sur le fichier
@@ -64,6 +71,7 @@ typedef struct s_cmd_data					t_cmd_data;
 typedef struct s_redir_data					t_redir_data;
 
 /**
+ * --- t_ast ---
  * Arbre pour stocker tous les tokens d'une ligne de commande :
  * - type : type du noeud
  * - cmd data : data pour l'exec si le noeud est une commande
@@ -73,6 +81,7 @@ typedef struct s_redir_data					t_redir_data;
 typedef struct s_ast						t_ast;
 
 /**
+ * --- t_minishell ---
  * Structure mere pour minishell :
  * - paths : les chemins des commandes (recupere dans envp)
  * - ast : la data de la ligne de commande
@@ -90,7 +99,7 @@ struct s_env_node
 struct s_hash_table
 {
 	t_env_node	**items;
-	int	size;
+	int			size;
 	int			count;
 };
 

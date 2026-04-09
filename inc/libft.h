@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 22:19:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/07 14:12:48 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/09 23:16:41 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
+
+typedef struct s_list	t_list;
+
+struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+};
 
 //
 // ------ FONCTIONS DE MANIPULATION & VERIFICATION DE CARACTERES ------
@@ -334,5 +342,74 @@ void		ft_putendl_fd(char *s, int fd);
  * - int fd : le descripteur de fichier.
  */
 void		ft_putnbr_fd(int n, int fd);
+
+//
+// ------ FONCTIONS DE MANIPULATION DE LISTES CHAINEES (Bonus) ------
+//
+
+/**
+ * Alloue et retourne un nouvel element de liste,
+ * - void *content : le contenu de l'element,
+ * - return : le nouvel element ou NULL.
+ */
+t_list		*ft_lstnew(void *content);
+
+/**
+ * Ajoute l'element new au debut de la liste lst,
+ * - t_list **lst : l'adresse du pointeur vers le premier element,
+ * - t_list *new : l'element a ajouter.
+ */
+void		ft_lstadd_front(t_list **lst, t_list *new);
+
+/**
+ * Compte le nombre d'elements de la liste,
+ * - t_list *lst : le debut de la liste,
+ * - return : la taille de la liste.
+ */
+int			ft_lstsize(t_list *lst);
+
+/**
+ * Renvoie le dernier element de la liste,
+ * - t_list *lst : le debut de la liste,
+ * - return : le dernier element.
+ */
+t_list		*ft_lstlast(t_list *lst);
+
+/**
+ * Ajoute l'element new a la fin de la liste,
+ * - t_list **lst : l'adresse du pointeur vers le premier element,
+ * - t_list *new : l'element a ajouter.
+ */
+void		ft_lstadd_back(t_list **lst, t_list *new);
+
+/**
+ * Supprime et libere la memoire d'un element,
+ * - t_list *lst : l'element a supprimer,
+ * - void (*del) : la fonction permettant de supprimer le contenu.
+ */
+void		ft_lstdelone(t_list *lst, void (*del)(void*));
+
+/**
+ * Supprime et libere la liste et ses suites,
+ * - t_list **lst : l'adresse du pointeur vers le premier element,
+ * - void (*del) : la fonction permettant de supprimer le contenu.
+ */
+void		ft_lstclear(t_list **lst, void (*del)(void*));
+
+/**
+ * Itere sur la liste et applique f au contenu de chaque element,
+ * - t_list *lst : le debut de la liste,
+ * - void (*f) : la fonction a appliquer.
+ */
+void		ft_lstiter(t_list *lst, void (*f)(void *));
+
+/**
+ * Itere sur la liste et applique f pour creer une nouvelle liste,
+ * - t_list *lst : le debut de la liste source,
+ * - void *(*f) : la fonction a appliquer,
+ * - void (*del) : la fonction pour supprimer en cas d'erreur d'alloc,
+ * - return : la nouvelle liste ou NULL.
+ */
+t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif

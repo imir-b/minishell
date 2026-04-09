@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by username          #+#    #+#             */
-/*   Updated: 2026/04/09 16:43:34 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/09 18:12:32 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_print_tokens(t_token *tokens);
 void	ft_print_ast(t_ast *node, int level);
 
 /* Error */
-int	ft_syntax_error(char *token_value);
-int	ft_ambiguous_redirect_err(char *str);
+int		ft_syntax_error(char *token_value);
+int		ft_ambiguous_redirect_err(char *str);
 
 /* Free */
 void	ft_free_tab(char **tab);

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/09 17:37:39 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/09 23:13:00 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 	}
 	node->cmd_data->args = ft_word_splitting(node->cmd_data->args);
 	i = 0;
-	new = ft_expand_wildcards(node->cmd_data->args);
+	node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
 	// node->cmd_data->args = ft_remove_quotes_array(node->cmd_data->args);
 	if (node->cmd_data->args && node->cmd_data->args[0])
 		node->cmd_data->cmd = node->cmd_data->args[0];
