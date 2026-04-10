@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 11:33:28 by username          #+#    #+#             */
-/*   Updated: 2026/04/07 14:35:50 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 19:23:05 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ static int	ft_key_len(char *str)
 {
 	int	i;
 
+	if (!str || !str[0])
+		return (0);
+	if (str[0] == '?' || (str[0] >= '0' && str[0] <= '9'))
+		return (1);
 	i = 0;
 	if (!str[i] || (!(str[i] >= 'a' && str[i] <= 'z')
 			&& !(str[i] >= 'A' && str[i] <= 'Z') && str[i] != '_'))
