@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by username          #+#    #+#             */
-/*   Updated: 2026/04/09 18:12:32 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 21:53:29 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # include "init.h"
 # include "parsing.h"
 # include "exec.h"
+
+extern int  g_exit_status;
 
 /* Debug */
 void	ft_print_tokens(t_token *tokens);

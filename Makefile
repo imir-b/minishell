@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+         #
+#    By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/11 23:05:00 by vlad              #+#    #+#              #
-#    Updated: 2026/04/10 16:12:22 by vbleskin         ###   ########.fr        #
+#    Updated: 2026/04/10 21:58:18 by vlad             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SUB_DIRS		=	data \
 					utils/string \
 					utils/memory \
 					utils/gnl \
-					utils/list
+					utils/list \
+					utils/conversions
 
 # ------------------------------------------------------------------------------
 # files

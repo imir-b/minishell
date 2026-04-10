@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:05:34 by username          #+#    #+#             */
-/*   Updated: 2026/04/10 19:24:21 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 21:56:05 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
 static int	ft_process_dollar(char *arg, int *i, t_hash_table *hash_map)
 {
 	char		*key;
+	char		*status_str;
 	t_env_node	*var_data;
 	int			len;
 
@@ -42,10 +43,18 @@ static int	ft_process_dollar(char *arg, int *i, t_hash_table *hash_map)
 	if (key)
 	{
 		*i += ft_strlen(key);
-		if ()
-		var_data = ft_expand_variable(key, hash_map);
-		if (var_data && var_data->value)
-			len += ft_strlen(var_data->value);
+		if (strcmp(key, "?") == 0)
+		{
+			status_str = ft_itoa(g_exit_status);
+			len += ft_strlen(status_str);
+			free (status_str);
+		}
+		else
+		{
+			var_data = ft_expand_variable(key, hash_map);
+			if (var_data && var_data->value)
+				len += ft_strlen(var_data->value);
+			}
 		free(key);
 	}
 	else
@@ -81,10 +90,12 @@ int	ft_expanded_len(char *arg, t_hash_table *hash_map)
 	return (len);
 }
 
+/**fonction de merde a decouper !! */
 static void	ft_handle_dollar(char *arg, char *ret, int *i, int *j,
 	t_hash_table	*map)
 {
 	char		*key;
+	char		*status_str;
 	t_env_node	*var_data;
 	int			k;
 	int			index;
@@ -97,15 +108,26 @@ static void	ft_handle_dollar(char *arg, char *ret, int *i, int *j,
 		return ;
 	}
 	(*i) += ft_strlen(key);
-	index = ft_hash_djb2((unsigned char *) key) % HASH_SIZE;
-	var_data = map->items[index];
-	while (var_data && ft_strcmp(var_data->key, key) != 0)
-		var_data = var_data->next;
-	if (var_data && var_data->value)
+	if (strcmp(key, "?") == 0)
 	{
+		status_str = ft_itoa(g_exit_status);
 		k = 0;
-		while (var_data->value[k])
-			ret[(*j)++] = var_data->value[k++];
+		while (status_str[k])
+			ret[(*j)++] = status_str[k++];
+		free(status_str);
+	}
+	else
+	{
+		index = ft_hash_djb2((unsigned char *) key) % HASH_SIZE;
+		var_data = map->items[index];
+		while (var_data && ft_strcmp(var_data->key, key) != 0)
+			var_data = var_data->next;
+		if (var_data && var_data->value)
+		{
+			k = 0;
+			while (var_data->value[k])
+				ret[(*j)++] = var_data->value[k++];
+		}
 	}
 	free(key);
 }
