@@ -6,7 +6,7 @@
 #    By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/11 23:05:00 by vlad              #+#    #+#              #
-#    Updated: 2026/04/07 14:09:39 by vbleskin         ###   ########.fr        #
+#    Updated: 2026/04/10 16:12:22 by vbleskin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ SUB_DIRS		=	data \
 					utils/io \
 					utils/string \
 					utils/memory \
-					utils/gnl
+					utils/gnl \
+					utils/list
 
 # ------------------------------------------------------------------------------
 # files
