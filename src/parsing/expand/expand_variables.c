@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:05:34 by username          #+#    #+#             */
-/*   Updated: 2026/04/09 16:54:42 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 19:03:49 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,23 @@ t_env_node	*ft_expand_variable(char *cursor, t_hash_table *h_map)
 int	ft_expanded_len(char *arg, t_hash_table *hash_map)
 {
 	int			i;
-	int			single_quote;
+	int			quotes;
 	int			len;
 	char		*key;
 	t_env_node	*var_data;
 
-	i = ((single_quote = ((len = 0))));
+	i = 0;
+	quotes = 0;
+	len = 0;
 	while (arg[i])
 	{
-		if (arg[i] == '\'')
+		if ((arg[i] == '\'' || arg[i] == '\"') && (!quotes || quotes == arg[i]))
 		{
-			single_quote = !single_quote;
+			quotes ^= arg[i];
 			len++;
 			i++;
 		}
-		else if (arg[i] == '$' && !single_quote)
+		else if (arg[i] == '$' && quotes != '\'')
 		{
 			key = ft_extract_key(&(arg[++i]));
 			if (key)
@@ -104,21 +106,21 @@ char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 {
 	int		i;
 	int		j;
-	int		single_quote;
+	int		quotes;
 	char	*ret;
 
-	single_quote = ((i = ((j = 0))));
+	quotes = ((i = ((j = 0))));
 	ret = malloc(sizeof(char) * (ft_expanded_len(arg, hash_map) + 1));
 	if (!ret)
 		return (NULL);
 	while (arg[i])
 	{
-		if (arg[i] == '\'')
+		if ((arg[i] == '\'' || arg[i] == '\"') && (!quotes || quotes == arg[i]))
 		{
-			single_quote = !single_quote;
+			quotes ^= arg[i];
 			ret[j++] = arg[i++];
 		}
-		else if (arg[i] == '$' && !single_quote)
+		else if (arg[i] == '$' && quotes != '\'')
 			ft_handle_dollar(arg, ret, &i, &j, hash_map);
 		else
 			ret[j++] = arg[i++];
