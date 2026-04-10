@@ -6,19 +6,16 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:34:33 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/10 16:34:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 18:52:37 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 static int	ft_is_matching(char *str, char *pattern)
 {
 	if (*str == '\0' && *pattern == '\0')
 		return (1);
-	if (*str == *pattern && *str != '\0')
-		return (ft_is_matching(str + 1, pattern + 1));
 	if (*pattern == '*')
 	{
 		if (*str == '\0')
@@ -26,6 +23,8 @@ static int	ft_is_matching(char *str, char *pattern)
 		return (ft_is_matching(str + 1, pattern)
 			|| ft_is_matching(str, pattern + 1));
 	}
+	if (*str == *pattern && *str != '\0')
+		return (ft_is_matching(str + 1, pattern + 1));
 	return (0);
 }
 

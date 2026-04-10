@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 19:05:56 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/06 19:07:02 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 18:17:22 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_free_tab(char **tab)
 	while (tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
 	free(tab);

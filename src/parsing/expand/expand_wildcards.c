@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:51:19 by username          #+#    #+#             */
-/*   Updated: 2026/04/10 16:34:16 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/10 18:39:47 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ char	**ft_expand_wildcards(char **args)
 		ft_expand_single_arg_wildcard(&args_lst, args[i]);
 		i++;
 	}
-	dest = malloc(sizeof(char *) * (ft_lstsize(args_lst) + 1));
+	dest = ft_calloc(ft_lstsize(args_lst) + 1, sizeof(char *));
 	if (!dest)
 		return (NULL);
 	if (ft_lstdup(dest, args_lst))
-		return (free(dest), NULL);
+		return (ft_free_tab(dest), NULL);
 	ft_lstclear(&args_lst, free);
 	ft_free_tab(args);
 	return (dest);
