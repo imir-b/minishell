@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/07 14:41:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/15 01:05:27 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	ft_process_command_line(char *command_line, t_minishell *data)
 	printf("\n--- AST ---\n");	// debug
 	ft_print_ast(data->ast, 0); // debug
 	printf("-----------\n\n");	// debug
+	if (ft_gather_heredocs(data->ast, data->hash_map))
+		return (1);
 	if (ft_expand_tree(data->ast, data->hash_map))
 		return (1);
 	printf("\n--- AST (apres expansion) ---\n");	// debug
