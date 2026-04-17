@@ -6,12 +6,14 @@
 /*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by username          #+#    #+#             */
-/*   Updated: 2026/04/15 01:05:58 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/15 23:15:28 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _POSIX_C_SOURCE 200809L
 
 # include <stdio.h>
 # include <unistd.h>
@@ -23,7 +25,10 @@
 # include <signal.h>
 # include <errno.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <dirent.h>
+# include <limits.h>
+# include <string.h>
 
 # include "libft.h"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/10 16:35:17 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/15 23:21:17 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,10 @@ char					**ft_expand_wildcards(char **args);
 t_list					*ft_handle_star(char *arg);
 char					**ft_remove_quotes_array(char **args);
 char					*ft_remove_quotes(char *arg);
+int						ft_process_dollar(char *arg, int *i, t_hash_table *hash_map);
+int						ft_handle_dollar(char *str, char *ret, int *j, t_hash_table *map);
+char					*ft_expand_heredoc_line(char *line, t_hash_table *hash_map);
+
+int						ft_gather_heredocs(t_ast *node, t_hash_table *hash_map);
 
 #endif

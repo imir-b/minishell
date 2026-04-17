@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/18 04:16:06 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/03 01:28:35 by vbleskin         ###   ########.fr       */
+/*   Created: 2026/04/15 23:02:45 by vlad              #+#    #+#             */
+/*   Updated: 2026/04/15 23:47:18 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_handle_sigint(int sig)
+void	ft_handle_sigint_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_exit_status = 130;
 		write(1, "\n", STDOUT_FILENO);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		close(STDIN_FILENO);
 	}
 }
 
-int	ft_setup_signals(void)
+int	ft_setup_signals_heredoc(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = ft_handle_sigint;
+	sa.sa_handler = ft_handle_sigint_heredoc;
 	if (sigemptyset(&sa.sa_mask) == -1)
 		return (1);
 	sa.sa_flags = 0;

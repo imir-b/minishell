@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 10:56:28 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/09 18:17:15 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/15 22:16:59 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ struct s_redir_data
 {
 	char	*file;
 	int		flags;
+	int		expand_heredoc;
 };
 
 struct s_minishell

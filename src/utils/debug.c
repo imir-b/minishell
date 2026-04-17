@@ -1,16 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                       :::      ::::::::    */
-/*   debug.c                                           :+:      :+:    :+:    */
-/*                                                   +:+ +:+         +:+      */
-/*   By: username <username@student.42tokyo.jp>    #+#  +:+       +#+         */
-/*                                               +#+#+#+#+#+   +#+            */
-/*   Created: 2026/03/19 21:00:00 by username         #+#    #+#              */
-/*   Updated: 2026/04/02 17:11:25 by username        ###   ########.fr        */
+/*                                                        :::      ::::::::   */
+/*   debug.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 21:00:00 by username          #+#    #+#             */
+/*   Updated: 2026/04/15 23:51:31 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void ft_debug_print_file_content(char *file, int level)
+{
+    int     fd;
+    char    buffer[256];
+    int     bytes_read;
+    int     i;
+
+    // On tente d'ouvrir le fichier en lecture seule
+    fd = open(file, O_RDONLY);
+    if (fd < 0)
+        return ; // S'il n'existe pas encore (ex: avant l'étape heredoc), on ignore
+        
+    i = 0;
+    while (i++ < level) printf("                 ");
+    printf("  --- CONTENU DU FICHIER ---\n");
+    
+    // On lit et on affiche le contenu brut
+    while ((bytes_read = read(fd, buffer, 255)) > 0)
+    {
+        buffer[bytes_read] = '\0';
+        printf("%s", buffer);
+    }
+    close(fd);
+    
+    i = 0;
+    while (i++ < level) printf("                 ");
+    printf("  --------------------------\n");
+}
 
 void	ft_print_tokens(t_token *tokens)
 {
@@ -90,6 +119,7 @@ void	ft_print_ast(t_ast *node, int level)
 			else if (node->type == NODE_REDIR_OUT) printf("O_TRUNC | O_CREAT | O_WRONLY\n");
 			else if (node->type == NODE_APPEND) printf("O_APPEND | O_CREAT | O_WRONLY\n");
 			else if (node->type == NODE_HEREDOC) printf("O_RDONLY | O_CREAT | O_TRUNC\n");
+		ft_debug_print_file_content(node->redir_data->file, level);
 		}
 	else if (node->type == NODE_COMMAND)
 	{
