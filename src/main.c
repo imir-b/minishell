@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 15:07:03 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/10 21:52:41 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/26 17:11:22 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	(void)av;
 	data = ft_init_minishell(envp);
-	// ft_setup_signals();
+	ft_setup_signals_interactive();
 	// ft_print_ascii();
 	ft_process_minishell(data);
 	return (0);

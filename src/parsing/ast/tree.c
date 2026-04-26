@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:05:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/26 16:10:03 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/26 17:46:33 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ static t_token	*ft_find_operator(t_token *first, t_token_type type1,
 					t_token_type type2)
 {
 	t_token	*current;
+	int		paren;
 
-	current = first;
+	paren = 0;
+	current = ft_token_last(first);
 	while (current)
 	{
-		if (current->type >= type1 && current->type <= type2)
+		if (current->type == TOK_R_PAREN)
+			paren++;
+		else if (current->type == TOK_L_PAREN)
+			paren--;
+		if (paren == 0 && current->type >= type1 && current->type <= type2)
 			return (current);
-		current = current->next;
+		current = current->prev;
 	}
 	return (NULL);
 }

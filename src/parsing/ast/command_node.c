@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:40:04 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/07 14:50:43 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/26 17:17:13 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ t_ast	*ft_create_command_node(t_token *first, t_minishell *data)
 {
 	t_ast	*node;
 
-	node = malloc(sizeof(t_ast) * 1);
+	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
 	node->type = NODE_COMMAND;
-	node->cmd_data = malloc(sizeof(t_cmd_data) * 1);
+	node->cmd_data = malloc(sizeof(t_cmd_data));
 	if (!node->cmd_data)
 		return (free(node), NULL);
 	node->cmd_data->args = ft_create_args(first);

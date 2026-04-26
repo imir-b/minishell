@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by username          #+#    #+#             */
-/*   Updated: 2026/04/03 01:42:01 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/26 17:42:56 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token_type	ft_get_token_type(char *value)
 		return (TOK_PIPE);
 	else if (value[0] == '>' && value[1] == '>')
 		return (TOK_APPEND);
-	else if (value[0] == '>') 
+	else if (value[0] == '>')
 		return (TOK_REDIR_OUT);
 	else if (value[0] == '<' && value[1] == '<')
 		return (TOK_HEREDOC);
@@ -68,4 +68,16 @@ t_token	*ft_tokenizer(char *command_line)
 		}
 	}
 	return (tokens);
+}
+
+t_token	*ft_token_last(t_token *first)
+{
+	t_token	*last;
+
+	last = first;
+	while (last->next)
+	{
+		last = last->next;
+	}
+	return (last);
 }

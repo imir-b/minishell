@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/15 23:21:17 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/26 17:54:02 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char					*ft_extract_word(char *command_line, int *i);
 char					*ft_extract_operator(char *command_line, int *i);
 t_token					*ft_new_token(char *value, t_token_type type);
 void					ft_token_add_back(t_token **tokens, t_token *new_token);
+t_token					*ft_token_last(t_token *first);
 t_token					*ft_tokenizer(char *command_line);
 void					*ft_free_tokens(t_token *tokens);
 void					ft_break_circle(t_token *first);
