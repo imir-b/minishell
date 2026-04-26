@@ -16,10 +16,10 @@ This document outlines the critical bugs, logic flaws, and missing features iden
 
 ## 2. Parsing & AST Logic Flaws
 
-### 2.1 Operator Precedence
+<!-- ### 2.1 Operator Precedence
 *   **Left-to-Right Bias**: `ft_find_operator` in `src/parsing/ast/tree.c` returns the first operator it encounters. This results in incorrect associativity for logical operators.
     *   *Example*: `cmd1 && cmd2 || cmd3` is parsed as `cmd1 && (cmd2 || cmd3)` instead of `(cmd1 && cmd2) || cmd3`.
-*   **Nesting Awareness**: The operator search logic does not account for parentheses. It will incorrectly pick an operator inside a subshell as the root of the tree if it appears first in the token stream.
+*   **Nesting Awareness**: The operator search logic does not account for parentheses. It will incorrectly pick an operator inside a subshell as the root of the tree if it appears first in the token stream. -->
 
 ### 2.2 Syntax Validation
 *   **Empty Nodes**: The current syntax check allows for some edge cases that might result in `NULL` nodes being passed to logic that expects valid command data.
