@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/26 17:54:02 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 14:32:55 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,19 @@ unsigned long			ft_hash_djb2(unsigned char *str);
 char					*ft_extract_key(char *str);
 char					*ft_expand_single_arg(char *arg,
 							t_hash_table *hash_map);
+void					ft_hash_table_insert(t_hash_table *hash_map,
+							char *key, char *value);
 char					**ft_word_splitting(char **args);
 char					**ft_expand_wildcards(char **args);
 t_list					*ft_handle_star(char *arg);
 char					**ft_remove_quotes_array(char **args);
 char					*ft_remove_quotes(char *arg);
-int						ft_process_dollar(char *arg, int *i, t_hash_table *hash_map);
-int						ft_handle_dollar(char *str, char *ret, int *j, t_hash_table *map);
-char					*ft_expand_heredoc_line(char *line, t_hash_table *hash_map);
+int						ft_process_dollar(char *arg, int *i,
+							t_hash_table *hash_map);
+int						ft_handle_dollar(char *str, char *ret, int *j,
+							t_hash_table *map);
+char					*ft_expand_heredoc_line(char *line,
+							t_hash_table *hash_map);
 
 int						ft_gather_heredocs(t_ast *node, t_hash_table *hash_map);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/15 01:05:27 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/27 13:55:10 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	ft_check_syntax(t_token *tokens)
 		return (ft_syntax_error(tokens->value));
 	while (tokens)
 	{
+		if (tokens->type == TOK_L_PAREN && tokens->next->type == TOK_R_PAREN)
+			return (ft_syntax_error(")"));
 		if (tokens->type >= TOK_REDIR_IN && tokens->type <= TOK_HEREDOC)
 		{
 			if (!tokens->next || tokens->next->type != TOK_WORD)

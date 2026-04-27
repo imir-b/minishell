@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 14:55:33 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/03/18 23:15:31 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/27 13:53:32 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 int	ft_is_space(char c)
 {

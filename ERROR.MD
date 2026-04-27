@@ -12,27 +12,29 @@ This document outlines the critical bugs, logic flaws, and missing features iden
 ### 1.2 Build System Failure
 *   **Makefile Paths**: The `Makefile` points to a non-existent `src/builtin` directory instead of `src/exec/built-in`. Consequently, none of the built-in commands (`cd`, `echo`, `exit`, etc.) are included in the compilation.
 
+NOTE : CHECK SI LES NODES DE L'AST SONT NULL AU DEBUT DE L'EXEC (selon le type check pour redir_data et cmd_data aussi)
+
 ---
 
-## 2. Parsing & AST Logic Flaws
+<!-- ## 2. Parsing & AST Logic Flaws -->
 
 <!-- ### 2.1 Operator Precedence
 *   **Left-to-Right Bias**: `ft_find_operator` in `src/parsing/ast/tree.c` returns the first operator it encounters. This results in incorrect associativity for logical operators.
     *   *Example*: `cmd1 && cmd2 || cmd3` is parsed as `cmd1 && (cmd2 || cmd3)` instead of `(cmd1 && cmd2) || cmd3`.
 *   **Nesting Awareness**: The operator search logic does not account for parentheses. It will incorrectly pick an operator inside a subshell as the root of the tree if it appears first in the token stream. -->
 
-### 2.2 Syntax Validation
-*   **Empty Nodes**: The current syntax check allows for some edge cases that might result in `NULL` nodes being passed to logic that expects valid command data.
+<!-- ### 2.2 Syntax Validation
+*   **Empty Nodes**: The current syntax check allows for some edge cases that might result in `NULL` nodes being passed to logic that expects valid command data. -->
 
----
+<!-- --- -->
 
-## 3. Environment & Hash Table Issues
+<!-- ## 3. Environment & Hash Table Issues
 
 ### 3.1 Duplicate Keys
 *   **Insertion Logic**: `ft_fill_item` in `src/parsing/expand/hash.c` appends new items to the end of a chain without checking if the key already exists.
     *   *Result*: Updating an environment variable creates a duplicate entry. Lookups will likely return the oldest (stale) value rather than the updated one.
 
----
+--- -->
 
 ## 4. Expansion & Wildcard Flaws
 

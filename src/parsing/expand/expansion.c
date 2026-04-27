@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/10 18:55:51 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 14:08:47 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_check_ambiguous_redirect(char *expanded_file)
 	while (expanded_file[i])
 	{
 		if ((expanded_file[i] == '\'' || expanded_file[i] == '\"')
-				&& (!quotes || quotes == expanded_file[i]))
+			&& (!quotes || quotes == expanded_file[i]))
 		{
 			quotes ^= expanded_file[i];
 		}
@@ -108,7 +108,7 @@ int	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
 			return (1);
 	}
 	else if (node->type == NODE_REDIR_OUT || node->type == NODE_REDIR_IN
-			|| node->type == NODE_APPEND)
+		|| node->type == NODE_APPEND)
 	{
 		if (ft_expand_redir_node(node, hash_map))
 			return (1);

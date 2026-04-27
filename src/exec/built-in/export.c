@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:21 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/15 00:59:16 by vlad             ###   ########.fr       */
+/*   Updated: 2026/04/27 14:20:32 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_update_existing_key(t_env_node *head, char *key, char *value)
+{
+	t_env_node	*current;
+
+	current = head;
+	while (current)
+	{
+		if (!ft_strcmp(current->key, key))
+		{
+			free(current->value);
+			current->value = value;
+			free(key);
+			return (1);
+		}
+		current = current->next;
+	}
+	return (0);
+}
 
 void	ft_hash_table_insert(t_hash_table *hash_map, char *key, char *value)
 {
@@ -19,15 +38,17 @@ void	ft_hash_table_insert(t_hash_table *hash_map, char *key, char *value)
 	t_env_node		*new;
 	t_env_node		*current;
 
-	index = 0;
+	hash = ft_hash_djb2((unsigned char *)key);
+	index = hash % HASH_SIZE;
+	if (hash_map->items[index]
+		&& ft_update_existing_key(hash_map->items[index], key, value))
+		return ;
 	new = malloc(sizeof(t_env_node) * 1);
 	if (!new)
 		return ;
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
-	hash = ft_hash_djb2((unsigned char *)key);
-	index = hash % HASH_SIZE;
 	if (!hash_map->items[index])
 		hash_map->items[index] = new;
 	else

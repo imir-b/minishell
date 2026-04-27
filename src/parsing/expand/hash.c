@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 11:33:28 by username          #+#    #+#             */
-/*   Updated: 2026/04/10 19:23:05 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 14:32:07 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,27 @@ char	*ft_extract_key(char *str)
 	return (key);
 }
 
+void	ft_update_shlvl(t_hash_table *hash_map)
+{
+	t_env_node	*current;
+	int			index;
+	int			shlvl;
+
+	shlvl = 1;
+	index = ft_hash_djb2((unsigned char *)"SHLVL") % HASH_SIZE;
+	current = hash_map->items[index];
+	while (current)
+	{
+		if (!ft_strcmp(current->key, "SHLVL"))
+		{
+			shlvl += ft_atoi(current->value);
+			break ;
+		}
+		current = current->next;
+	}
+	ft_hash_table_insert(hash_map, ft_strdup("SHLVL"), ft_itoa(shlvl));
+}
+
 t_hash_table	*ft_init_hash_map(char **envp)
 {
 	t_hash_table	*hash_map;
@@ -129,5 +150,6 @@ t_hash_table	*ft_init_hash_map(char **envp)
 	hash_map->count = count;
 	hash_map->items = items;
 	hash_map->size = HASH_SIZE;
+	ft_update_shlvl(hash_map);
 	return (hash_map);
 }
