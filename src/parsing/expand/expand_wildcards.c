@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:51:19 by username          #+#    #+#             */
-/*   Updated: 2026/04/10 18:39:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 22:17:41 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,14 @@ int	ft_has_unquoted_star(char *str)
 void	ft_expand_single_arg_wildcard(t_list **args_lst, char *arg)
 {
 	t_list	*expanded_files;
-	char	*clean_pattern;
 
 	if (ft_has_unquoted_star(arg))
 	{
-		clean_pattern = ft_remove_quotes(arg);
-		expanded_files = ft_handle_star(clean_pattern);
+		expanded_files = ft_handle_star(arg);
 		if (expanded_files)
 			ft_lstadd_back(args_lst, expanded_files);
 		else
 			ft_lstadd_back(args_lst, ft_lstnew(ft_strdup(arg)));
-		free(clean_pattern);
 	}
 	else
 		ft_lstadd_back(args_lst, ft_lstnew(ft_strdup(arg)));

@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/27 14:08:47 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 22:40:20 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,6 @@ interpreting the meta-characters in the quoted sequence.
 interpreting the meta-characters in the quoted sequence except
 for $ (dollar sign)
 */
-
-int	ft_check_ambiguous_redirect(char *expanded_file)
-{
-	int	i;
-	int	quotes;
-
-	if (expanded_file[0] == '\0')
-		return (1);
-	i = 0;
-	quotes = 0;
-	while (expanded_file[i])
-	{
-		if ((expanded_file[i] == '\'' || expanded_file[i] == '\"')
-			&& (!quotes || quotes == expanded_file[i]))
-		{
-			quotes ^= expanded_file[i];
-		}
-		if ((expanded_file[i] == ' ' || expanded_file[i] == '\t') && !quotes)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 {
@@ -79,16 +56,27 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 {
 	char	*original;
 	char	*new;
+	char	**temp;
+	char	**split;
+	int		word_count;
 
 	original = ft_strdup(node->redir_data->file);
 	new = ft_expand_single_arg(node->redir_data->file, map);
+	temp = malloc(sizeof(char *) * 2);
+	if (!temp)
+		return (free(original), free(new), 1);
+	temp[0] = new;
+	temp[1] = NULL;
+	split = ft_word_splitting(temp);
+	word_count = 0;
+	while (split && split[word_count])
+		word_count++;
+	if (word_count != 1)
+		return (ft_free_tab(split),
+			ft_ambiguous_redirect_err(original), free(original), 1);
 	free(node->redir_data->file);
-	node->redir_data->file = new;
-	if (ft_check_ambiguous_redirect(node->redir_data->file))
-		return (ft_ambiguous_redirect_err(original));
-	node->redir_data->file = ft_remove_quotes(node->redir_data->file);
-	free(original);
-	return (0);
+	node->redir_data->file = ft_remove_quotes(split[0]);
+	return (ft_free_tab(split), free(original), 0);
 }
 
 /**

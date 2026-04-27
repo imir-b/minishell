@@ -6,25 +6,29 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:34:33 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/10 18:52:37 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/04/27 22:24:34 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_is_matching(char *str, char *pattern)
+static int	ft_is_matching(char *str, char *pattern, int in_quotes)
 {
 	if (*str == '\0' && *pattern == '\0')
 		return (1);
+	if (*pattern == '\'' && in_quotes != '\"')
+		return (ft_is_matching(str, pattern +1, in_quotes ^ '\''));
+	if (*pattern == '\"' && in_quotes != '\'')
+		return (ft_is_matching(str, pattern + 1, in_quotes ^ '\"'));
 	if (*pattern == '*')
 	{
 		if (*str == '\0')
-			return (ft_is_matching(str, pattern + 1));
-		return (ft_is_matching(str + 1, pattern)
-			|| ft_is_matching(str, pattern + 1));
+			return (ft_is_matching(str, pattern + 1, in_quotes));
+		return (ft_is_matching(str + 1, pattern, in_quotes)
+			|| ft_is_matching(str, pattern + 1, in_quotes));
 	}
 	if (*str == *pattern && *str != '\0')
-		return (ft_is_matching(str + 1, pattern + 1));
+		return (ft_is_matching(str + 1, pattern + 1, in_quotes));
 	return (0);
 }
 
@@ -47,7 +51,7 @@ t_list	*ft_handle_star(char *arg)
 			t_dirent = readdir(dir);
 			continue ;
 		}
-		if (ft_is_matching(t_dirent->d_name, arg))
+		if (ft_is_matching(t_dirent->d_name, arg, 0))
 		{
 			new = ft_lstnew(ft_strdup(t_dirent->d_name));
 			ft_lstadd_back(&files, new);
