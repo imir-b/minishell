@@ -12,10 +12,16 @@
 
 #include "minishell.h"
 
-void	ft_exit(int status)
+void	ft_exit(t_minishell *data, char **args)
 {
-	if (status < 0)
-		exit(255);
+	int	status;
+
+	(void)data;
+	status = g_exit_status;
+	if (args && args[0] && args[1])
+	{
+		status = ft_atoi(args[1]);
+	}
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	exit(status);
 }

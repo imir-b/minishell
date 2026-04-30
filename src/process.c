@@ -79,7 +79,7 @@ int	ft_process_command_line(char *command_line, t_minishell *data)
 	tokens = ft_tokenizer(command_line);
 	if (!tokens)
 		return (1);
-	ft_print_tokens(tokens); // debug
+	// ft_print_tokens(tokens); // debug
 	ft_break_circle(tokens);
 	if (ft_check_syntax(tokens))
 		return (ft_free_tokens(tokens), 1);
@@ -87,16 +87,16 @@ int	ft_process_command_line(char *command_line, t_minishell *data)
 	if (!data->ast)
 		return (ft_free_tokens(tokens), 1);
 	ft_free_tokens(tokens);
-	printf("\n--- AST ---\n");	// debug
-	ft_print_ast(data->ast, 0); // debug
-	printf("-----------\n\n");	// debug
+	// printf("\n--- AST ---\n");	// debug
+	// ft_print_ast(data->ast, 0); // debug
+	// printf("-----------\n\n");	// debug
 	if (ft_gather_heredocs(data->ast, data->hash_map))
 		return (1);
 	if (ft_expand_tree(data->ast, data->hash_map))
 		return (1);
-	printf("\n--- AST (apres expansion) ---\n");	// debug
-	ft_print_ast(data->ast, 0); // debug
-	printf("-----------\n\n");	// debug
+	// printf("\n--- AST (apres expansion) ---\n");	// debug
+	// ft_print_ast(data->ast, 0); // debug
+	// printf("-----------\n\n");	// debug
 	ft_execute(data);
 	return (0);
 }

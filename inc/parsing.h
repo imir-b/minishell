@@ -49,6 +49,7 @@ unsigned long			ft_hash_djb2(unsigned char *str);
 char					*ft_extract_key(char *str);
 char					*ft_expand_single_arg(char *arg,
 							t_hash_table *hash_map);
+char					*ft_get_value(t_hash_table *hash_map, char *key);
 void					ft_hash_table_insert(t_hash_table *hash_map,
 							char *key, char *value);
 char					**ft_word_splitting(char **args);

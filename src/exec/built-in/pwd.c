@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_pwd(void)
+void	ft_pwd(void)
 {
 	size_t	size;
 	char	*ret;
@@ -21,7 +21,7 @@ int	ft_pwd(void)
 	size = 1024;
 	buffer = malloc(sizeof(char) * size);
 	if (!buffer)
-		return (1);
+		return ;
 	ret = getcwd(buffer, size);
 	while (ret == NULL)
 	{
@@ -31,14 +31,16 @@ int	ft_pwd(void)
 			size *= 2;
 			buffer = malloc(sizeof(char) * size);
 			if (!buffer)
-				return (1);
+				return ;
 			ret = getcwd(buffer, size);
 		}
 		else
-			return (free(buffer), 1);
+		{
+			free(buffer);
+			return ;
+		}
 	}
 	ft_putstr_fd(buffer, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	free(buffer);
-	return (0);
 }

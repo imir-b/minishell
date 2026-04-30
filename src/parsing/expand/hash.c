@@ -125,6 +125,31 @@ void	ft_update_shlvl(t_hash_table *hash_map)
 	ft_hash_table_insert(hash_map, ft_strdup("SHLVL"), ft_itoa(shlvl));
 }
 
+/**
+ * ft_get_value - Retrieves the value associated with a key in the hash map.
+ * @hash_map: Pointer to the hash table.
+ * @key: The environment variable name to search for.
+ * 
+ * Returns the value string if found, otherwise NULL.
+ */
+char	*ft_get_value(t_hash_table *hash_map, char *key)
+{
+	t_env_node	*current;
+	int			index;
+
+	if (!hash_map || !key)
+		return (NULL);
+	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
+	current = hash_map->items[index];
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 t_hash_table	*ft_init_hash_map(char **envp)
 {
 	t_hash_table	*hash_map;

@@ -51,3 +51,10 @@ NOTE : CHECK SI LES NODES DE L'AST SONT NULL AU DEBUT DE L'EXEC (selon le type c
 
 ### 5.1 Heredoc Cleanup
 *   **FD Leaks**: There is no clear mechanism in the current code to ensure that temporary files or pipes used for heredocs are closed and unlinked in all exit paths (especially after a SIGINT).
+
+
+Built in export fonctionne pas
+
+Wildcards dans les heredocs fonctionne pas
+
+Make re fonctionne pas
