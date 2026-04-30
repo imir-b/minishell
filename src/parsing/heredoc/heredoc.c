@@ -63,7 +63,18 @@ int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
 	char	*temp_file;
 	int		fd;
 	int		saved_stdin;
+	char	**temp_arr;
+	char	**wildcard_exp;
 
+	temp_arr = ft_calloc(2, sizeof(char *));
+	temp_arr[0] = ft_strdup(redir_data->file);
+	wildcard_exp = ft_expand_wildcards(temp_arr);
+	if (wildcard_exp && wildcard_exp[0])
+	{
+		free(redir_data->file);
+		redir_data->file = ft_strdup(wildcard_exp[0]);
+	}
+	ft_free_tab(wildcard_exp);
 	temp_file = ft_get_heredoc_temp_file_name();
 	if (!temp_file)
 		return (1);

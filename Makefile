@@ -114,13 +114,19 @@ $(NAME):		$(OBJ)
 	@echo -e "\xe2\x94\x9b"
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@echo -en "$(CYAN)Cleaning objects...$(END)\n"
+	@if [ -d $(OBJ_DIR) ]; then \
+		rm -rf $(OBJ_DIR); \
+		echo -en "$(CYAN)Cleaning objects...$(END)\n"; \
+	fi
 
 fclean: 		clean
-	@rm -rf $(NAME)
-	@echo -en "$(CYAN)Cleaning binary...$(END)\n"
+	@if [ -f $(NAME) ]; then \
+		rm -rf $(NAME); \
+		echo -en "$(CYAN)Cleaning binary...$(END)\n"; \
+	fi
 
-re: 			fclean all
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 .PHONY:			all clean fclean re

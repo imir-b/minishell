@@ -45,7 +45,7 @@ int	ft_exec_builtin(t_ast *node, t_minishell *data)
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd, "export") == 0)
-		ft_export(data->hash_map, args[1], args[2]);
+		ft_export(data->hash_map, args);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		ft_unset(data->hash_map, args[1]);
 	else if (ft_strcmp(cmd, "env") == 0)

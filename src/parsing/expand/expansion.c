@@ -42,7 +42,6 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 		node->cmd_data->args[i++] = new;
 	}
 	node->cmd_data->args = ft_word_splitting(node->cmd_data->args);
-	i = 0;
 	node->cmd_data->args = ft_expand_wildcards(node->cmd_data->args);
 	node->cmd_data->args = ft_remove_quotes_array(node->cmd_data->args);
 	if (node->cmd_data->args && node->cmd_data->args[0])
@@ -58,6 +57,7 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	char	*new;
 	char	**temp;
 	char	**split;
+	char	**wildcard_exp;
 	int		word_count;
 
 	original = ft_strdup(node->redir_data->file);
@@ -68,15 +68,16 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	temp[0] = new;
 	temp[1] = NULL;
 	split = ft_word_splitting(temp);
+	wildcard_exp = ft_expand_wildcards(split);
 	word_count = 0;
-	while (split && split[word_count])
+	while (wildcard_exp && wildcard_exp[word_count])
 		word_count++;
 	if (word_count != 1)
-		return (ft_free_tab(split),
+		return (ft_free_tab(wildcard_exp),
 			ft_ambiguous_redirect_err(original), free(original), 1);
 	free(node->redir_data->file);
-	node->redir_data->file = ft_remove_quotes(split[0]);
-	return (ft_free_tab(split), free(original), 0);
+	node->redir_data->file = ft_remove_quotes(wildcard_exp[0]);
+	return (ft_free_tab(wildcard_exp), free(original), 0);
 }
 
 /**

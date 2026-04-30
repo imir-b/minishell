@@ -30,7 +30,7 @@ void    ft_cd(t_hash_table *hash_map, char *path);
 void    ft_echo(char **args);
 void    ft_env(t_hash_table *hash_map);
 void    ft_exit(t_minishell *data, char **args);
-void    ft_export(t_hash_table *hash_map, char *key, char *value);
+void    ft_export(t_hash_table *hash_map, char **args);
 void    ft_pwd(void);
 void    ft_unset(t_hash_table *hash_map, char *key);
 
