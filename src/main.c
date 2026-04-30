@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	data = ft_init_minishell(envp);
 	ft_setup_signals_interactive();
-	// ft_print_ascii();
+	ft_print_ascii();
 	ft_process_minishell(data);
 	return (0);
 }

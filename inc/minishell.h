@@ -46,6 +46,10 @@ extern int  g_exit_status;
 void	ft_print_tokens(t_token *tokens);
 void	ft_print_ast(t_ast *node, int level);
 
+/* Process */
+void	ft_print_ascii(void);
+void	ft_process_minishell(t_minishell *data);
+
 /* Error */
 int		ft_syntax_error(char *token_value);
 int		ft_ambiguous_redirect_err(char *str);
