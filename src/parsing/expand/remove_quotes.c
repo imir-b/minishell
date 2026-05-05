@@ -16,7 +16,6 @@ char	*ft_remove_quotes(char *arg)
 {
 	int		i;
 	int		j;
-	int		quote;
 	char	*dest;
 
 	dest = malloc(sizeof(char) * (ft_strlen(arg) + 1));
@@ -24,11 +23,10 @@ char	*ft_remove_quotes(char *arg)
 		return (NULL);
 	i = 0;
 	j = 0;
-	quote = 0;
 	while (arg[i])
 	{
-		if ((arg[i] == '\'' || arg[i] == '\"') && (!quote || quote == arg[i]))
-			quote ^= arg[i++];
+		if (arg[i] == '\x01' || arg[i] == '\x02')
+			i++;
 		else
 			dest[j++] = arg[i++];
 	}

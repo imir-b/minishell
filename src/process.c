@@ -94,19 +94,18 @@ int	ft_process_command_line(char *command_line, t_minishell *data)
 		return (ft_free_tokens(tokens), 1);
 	data->ast = ft_create_tree(tokens, data);
 	if (!data->ast)
-		return (ft_free_tokens(tokens), 1);
-	ft_free_tokens(tokens);
+		return (1);
 	// printf("\n--- AST ---\n");	// debug
 	// ft_print_ast(data->ast, 0); // debug
 	// printf("-----------\n\n");	// debug
 	if (ft_gather_heredocs(data->ast, data->hash_map))
 		return (1);
-	if (ft_expand_tree(data->ast, data->hash_map))
-		return (1);
 	// printf("\n--- AST (apres expansion) ---\n");	// debug
 	// ft_print_ast(data->ast, 0); // debug
 	// printf("-----------\n\n");	// debug
 	ft_execute(data);
+	ft_free_ast(data->ast);
+	data->ast = NULL;
 	return (0);
 }
 

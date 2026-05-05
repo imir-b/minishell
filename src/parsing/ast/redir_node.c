@@ -15,7 +15,7 @@
 static void	ft_fill_redir(t_node_type type, char *file, int flags, t_ast *node)
 {
 	node->type = type;
-	node->redir_data->file = file;
+	node->redir_data->file = ft_strdup(file);
 	node->redir_data->flags = flags;
 }
 
@@ -72,11 +72,16 @@ t_ast	*ft_create_redir_node(t_token *current, t_token *first,
 {
 	t_ast	*node;
 	t_token	*file_name;
+	t_token	*next_op;
+	int		is_first;
 
 	file_name = current->next;
 	if (!file_name)
 		return (NULL);
+	is_first = (current == first);
 	first = ft_extract_redir_tokens(current, file_name, first);
+	if (is_first && first && first->type == TOK_L_PAREN)
+		return (ft_syntax_error("("), NULL);
 	node = malloc(sizeof(t_ast) * 1);
 	if (!node)
 		return (NULL);
@@ -85,7 +90,16 @@ t_ast	*ft_create_redir_node(t_token *current, t_token *first,
 	if (!node->redir_data)
 		return (free(node), NULL);
 	ft_assign_redir_type(current, file_name, node);
-	node->left = ft_create_tree(first, data);
+	free(current->value);
+	free(current);
+	free(file_name->value);
+	free(file_name);
+	
+	next_op = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
+	if (next_op)
+		node->left = ft_create_redir_node(next_op, first, data);
+	else
+		node->left = ft_create_tree(first, data);
 	node->right = NULL;
 	return (node);
 }

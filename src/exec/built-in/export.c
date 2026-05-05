@@ -99,13 +99,64 @@ static void	ft_export_single(t_hash_table *hash_map, char *arg)
 	ft_hash_table_insert(hash_map, key, value);
 }
 
+static void	ft_sort_env(char **env)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (env[i])
+	{
+		j = i + 1;
+		while (env[j])
+		{
+			if (ft_strcmp(env[i], env[j]) > 0)
+			{
+				tmp = env[i];
+				env[i] = env[j];
+				env[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	ft_print_export(t_hash_table *hash_map)
+{
+	char	**env;
+	int		i;
+	char	*eq;
+
+	env = ft_get_env_tab(hash_map);
+	if (!env)
+		return ;
+	ft_sort_env(env);
+	i = 0;
+	while (env[i])
+	{
+		printf("declare -x ");
+		eq = ft_strchr(env[i], '=');
+		if (eq)
+		{
+			*eq = '\0';
+			printf("%s=\"%s\"\n", env[i], eq + 1);
+		}
+		else
+			printf("%s\n", env[i]);
+		i++;
+	}
+	ft_free_tab(env);
+}
+
 void	ft_export(t_hash_table *hash_map, char **args)
 {
 	int	i;
 
 	if (!args[1])
 	{
-		ft_env(hash_map);
+		ft_print_export(hash_map);
 		return ;
 	}
 	i = 1;

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static t_token	*ft_find_operator(t_token *first, t_token_type type1,
+t_token	*ft_find_operator(t_token *first, t_token_type type1,
 					t_token_type type2)
 {
 	t_token	*current;
@@ -45,11 +45,15 @@ t_ast	*ft_create_tree(t_token *first, t_minishell *data)
 	op = ft_find_operator(first, TOK_PIPE, TOK_PIPE);
 	if (op)
 		return (ft_create_pipe_node(op, first, data));
-	op = ft_find_operator(first, TOK_L_PAREN, TOK_L_PAREN);
-	if (op)
-		return (ft_create_subshell_node(op, data));
 	op = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
 	if (op)
 		return (ft_create_redir_node(op, first, data));
+	op = ft_find_operator(first, TOK_L_PAREN, TOK_L_PAREN);
+	if (op)
+	{
+		if (op != first)
+			return (ft_syntax_error(op->value), NULL);
+		return (ft_create_subshell_node(op, data));
+	}
 	return (ft_create_command_node(first, data));
 }

@@ -154,7 +154,8 @@ char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 		if ((arg[i] == '\'' || arg[i] == '\"') && (!quotes || quotes == arg[i]))
 		{
 			quotes ^= arg[i];
-			ret[j++] = arg[i++];
+			ret[j++] = (arg[i] == '\'') ? '\x01' : '\x02';
+			i++;
 		}
 		else if (arg[i] == '$' && quotes != '\'')
 		{

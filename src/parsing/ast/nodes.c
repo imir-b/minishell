@@ -41,6 +41,8 @@ t_ast	*ft_create_and_or_node(t_token *current, t_token *first,
 		node->type = NODE_OR;
 	node->left = ft_create_tree(first, data);
 	node->right = ft_create_tree(first_right, data);
+	free(current->value);
+	free(current);
 	return (node);
 }
 
@@ -62,5 +64,7 @@ t_ast	*ft_create_pipe_node(t_token *current, t_token *first,
 	node->type = NODE_PIPE;
 	node->left = ft_create_tree(first, data);
 	node->right = ft_create_tree(first_right, data);
+	free(current->value);
+	free(current);
 	return (node);
 }

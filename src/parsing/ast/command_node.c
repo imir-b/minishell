@@ -39,33 +39,11 @@ static char	**ft_create_args(t_token *first)
 	return (args);
 }
 
-static char	*ft_find_cmd_path(char **paths, char *cmd)
-{
-	char	*full_path;
-	int		i;
-
-	full_path = NULL;
-	i = 0;
-	if (ft_strrchr(cmd, '/') && access(cmd, X_OK) == 0)
-		full_path = ft_strdup(cmd);
-	else
-	{
-		while (paths && paths[i])
-		{
-			full_path = ft_super_join(paths[i], cmd, '/');
-			if (full_path && access(full_path, X_OK) == 0)
-				break ;
-			free(full_path);
-			i++;
-		}
-	}
-	return (full_path);
-}
-
 t_ast	*ft_create_command_node(t_token *first, t_minishell *data)
 {
 	t_ast	*node;
 
+	(void)data;
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
@@ -75,9 +53,10 @@ t_ast	*ft_create_command_node(t_token *first, t_minishell *data)
 		return (free(node), NULL);
 	node->cmd_data->args = ft_create_args(first);
 	node->cmd_data->cmd = node->cmd_data->args[0];
-	node->cmd_data->path = ft_find_cmd_path(data->paths, first->value);
+	node->cmd_data->path = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	node->redir_data = NULL;
+	ft_free_tokens(first);
 	return (node);
 }

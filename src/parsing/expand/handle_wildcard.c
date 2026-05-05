@@ -38,25 +38,48 @@ t_list	*ft_handle_star(char *arg)
 	t_list			*new;
 	DIR				*dir;
 	struct dirent	*t_dirent;
+	char			*path;
+	char			*pattern;
+	char			*last_slash;
 
-	dir = opendir(".");
+	last_slash = ft_strrchr(arg, '/');
+	if (last_slash)
+	{
+		path = ft_strndup(arg, last_slash - arg);
+		pattern = ft_strdup(last_slash + 1);
+	}
+	else
+	{
+		path = ft_strdup(".");
+		pattern = ft_strdup(arg);
+	}
+	dir = opendir(path);
 	if (!dir)
+	{
+		free(path);
+		free(pattern);
 		return (NULL);
+	}
 	files = NULL;
 	t_dirent = readdir(dir);
 	while (t_dirent != NULL)
 	{
-		if (t_dirent->d_name[0] == '.' && arg[0] != '.')
+		if (t_dirent->d_name[0] == '.' && pattern[0] != '.')
 		{
 			t_dirent = readdir(dir);
 			continue ;
 		}
-		if (ft_is_matching(t_dirent->d_name, arg, 0))
+		if (ft_is_matching(t_dirent->d_name, pattern, 0))
 		{
-			new = ft_lstnew(ft_strdup(t_dirent->d_name));
+			if (ft_strcmp(path, ".") == 0)
+				new = ft_lstnew(ft_strdup(t_dirent->d_name));
+			else
+				new = ft_lstnew(ft_strjoin(ft_strjoin(ft_strdup(path), "/"), t_dirent->d_name));
 			ft_lstadd_back(&files, new);
 		}
 		t_dirent = readdir(dir);
 	}
+	free(path);
+	free(pattern);
 	return (closedir(dir), files);
 }

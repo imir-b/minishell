@@ -26,6 +26,8 @@ char					*ft_extract_operator(char *command_line, int *i);
 t_token					*ft_new_token(char *value, t_token_type type);
 void					ft_token_add_back(t_token **tokens, t_token *new_token);
 t_token					*ft_token_last(t_token *first);
+t_token					*ft_find_operator(t_token *first, t_token_type type1,
+							t_token_type type2);
 t_token					*ft_tokenizer(char *command_line);
 void					*ft_free_tokens(t_token *tokens);
 void					ft_break_circle(t_token *first);
@@ -44,7 +46,8 @@ t_ast					*ft_create_command_node(t_token *first,
 							t_minishell *data);
 t_ast					*ft_create_tree(t_token *tokens, t_minishell *data);
 
-int						ft_expand_tree(t_ast *node, t_hash_table *hash_map);
+int						ft_expand_node(t_ast *node, t_hash_table *hash_map);
+void					ft_free_hash_map(t_hash_table *hash_map);
 unsigned long			ft_hash_djb2(unsigned char *str);
 char					*ft_extract_key(char *str);
 char					*ft_expand_single_arg(char *arg,

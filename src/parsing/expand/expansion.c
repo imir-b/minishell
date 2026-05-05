@@ -81,16 +81,14 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 }
 
 /**
-* On navigue dans tout l'ast pour chercher des variables (qui commencent
-* par '$') et leur asigner leur valeur qui a ete stocke dans la hash map.
+* ft_expand_node - Expands variables, wildcards and removes quotes for a single node.
+* This is called during execution to ensure environment changes are reflected.
 */
 
-int	ft_expand_tree(t_ast *node, t_hash_table *hash_map)
+int	ft_expand_node(t_ast *node, t_hash_table *hash_map)
 {
 	if (!node)
 		return (0);
-	ft_expand_tree(node->left, hash_map);
-	ft_expand_tree(node->right, hash_map);
 	if (node->type == NODE_COMMAND)
 	{
 		if (ft_expand_cmd_node(node, hash_map))

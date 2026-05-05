@@ -51,6 +51,10 @@ t_ast	*ft_create_subshell_node(t_token *current, t_minishell *data)
 		return (NULL);
 	node->type = NODE_SUBSHELL;
 	node->left = ft_create_tree(inside_content, data);
+	free(current->value);
+	free(current);
+	free(r_paren->value);
+	free(r_paren);
 	if (!node->left)
 		return (ft_free_ast(node), NULL);
 	return (node);

@@ -29,7 +29,7 @@ int	ft_count_words_array(char **strs)
 			total_words++;
 		while (strs[i][j])
 		{
-			if ((strs[i][j] == '\'' || strs[i][j] == '\"')
+			if ((strs[i][j] == '\x01' || strs[i][j] == '\x02')
 				&& (!quotes || quotes == strs[i][j]))
 				quotes ^= strs[i][j];
 			else if (strs[i][j] == ' ' && !quotes && strs[i][j + 1] != ' '
@@ -51,7 +51,7 @@ static int	ft_get_next_word_len(char *str, int start)
 	quotes = 0;
 	while (str[start + len])
 	{
-		if ((str[start + len] == '\'' || str[start + len] == '\"')
+		if ((str[start + len] == '\x01' || str[start + len] == '\x02')
 			&& (!quotes || quotes == str[start + len]))
 			quotes ^= str[start + len];
 		else if (str[start + len] == ' ' && !quotes)

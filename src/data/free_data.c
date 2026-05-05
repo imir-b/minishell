@@ -16,10 +16,15 @@ void	*ft_free_data(t_minishell *data)
 {
 	int	i;
 
-	i = 0;
-	while (data->paths[i])
-		free(data->paths[i++]);
-	free (data->paths);
+	if (data->paths)
+	{
+		i = 0;
+		while (data->paths[i])
+			free(data->paths[i++]);
+		free (data->paths);
+	}
+	if (data->hash_map)
+		ft_free_hash_map(data->hash_map);
 	free (data);
 	return (NULL);
 }

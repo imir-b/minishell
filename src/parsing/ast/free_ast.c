@@ -26,8 +26,6 @@ void	ft_free_array(char **array)
 
 void	free_cmd_data(t_cmd_data *data)
 {
-	if (data->cmd)
-		free(data->cmd);
 	if (data->args)
 		ft_free_array(data->args);
 	if (data->path)
@@ -44,14 +42,15 @@ void	free_redir_data(t_redir_data *data)
 
 void	ft_free_ast(t_ast *self)
 {
+	if (!self)
+		return ;
 	if (self->left)
 		ft_free_ast(self->left);
 	if (self->right)
 		ft_free_ast(self->right);
-	if (self->type == NODE_COMMAND)
+	if (self->cmd_data)
 		free_cmd_data(self->cmd_data);
-	else if (self->type == NODE_REDIR_IN || self->type == NODE_REDIR_OUT
-		|| self->type == NODE_APPEND || self->type == NODE_HEREDOC)
+	if (self->redir_data)
 		free_redir_data(self->redir_data);
 	free(self);
 }

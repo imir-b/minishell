@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include <sys/stat.h>
+
 /**
  * ft_is_builtin - Checks if a command is a shell built-in.
  */
@@ -55,6 +57,30 @@ int	ft_exec_builtin(t_ast *node, t_minishell *data)
 	return (g_exit_status);
 }
 
+static int	ft_handle_exec_error(char *cmd, char *path)
+{
+	struct stat	path_stat;
+
+	if (!path || (ft_strchr(cmd, '/') && access(cmd, F_OK) != 0))
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		return (g_exit_status = 127);
+	}
+	if (stat(path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": is a directory\n", STDERR_FILENO);
+		return (g_exit_status = 126);
+	}
+	if (access(path, X_OK) != 0)
+	{
+		perror(cmd);
+		return (g_exit_status = 126);
+	}
+	return (0);
+}
+
 /**
  * ft_exec_command - Handles execution of simple commands.
  * Resolves path, forks, and executes using execve.
@@ -64,19 +90,16 @@ int	ft_exec_command(t_ast *node, t_minishell *data)
 	pid_t	pid;
 	int		status;
 	char	**env_tab;
+	int		err;
 
-	if (!node->cmd_data->cmd)
+	if (!node->cmd_data->cmd || !*node->cmd_data->cmd)
 		return (0);
 	if (ft_is_builtin(node->cmd_data->cmd))
 		return (ft_exec_builtin(node, data));
 	node->cmd_data->path = ft_get_cmd_path(node->cmd_data->cmd, data->hash_map);
-	if (!node->cmd_data->path)
-	{
-		ft_putstr_fd(node->cmd_data->cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		g_exit_status = 127;
-		return (127);
-	}
+	err = ft_handle_exec_error(node->cmd_data->cmd, node->cmd_data->path);
+	if (err)
+		return (err);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -100,11 +123,18 @@ int	ft_exec_node(t_ast *node, t_minishell *data)
 	if (!node)
 		return (0);
 	if (node->type == NODE_COMMAND)
+	{
+		ft_expand_node(node, data->hash_map);
 		return (ft_exec_command(node, data));
+	}
 	if (node->type == NODE_PIPE)
 		return (ft_exec_pipe(node, data));
 	if (node->type >= NODE_REDIR_IN && node->type <= NODE_HEREDOC)
+	{
+		if (ft_expand_node(node, data->hash_map))
+			return (1);
 		return (ft_exec_redir(node, data));
+	}
 	if (node->type == NODE_AND || node->type == NODE_OR)
 		return (ft_exec_logical(node, data));
 	if (node->type == NODE_SUBSHELL)

@@ -25,5 +25,6 @@ int	main(int ac, char **av, char **envp)
 	ft_setup_signals_interactive();
 	ft_print_ascii();
 	ft_process_minishell(data);
+	ft_free_data(data);
 	return (0);
 }

@@ -42,24 +42,27 @@ void	ft_fill_item(t_env_node **items, char *key, char *value)
 	t_env_node		*new;
 	t_env_node		*current;
 
-	index = 0;
+	hash = ft_hash_djb2((unsigned char *)key);
+	index = hash % HASH_SIZE;
+	current = items[index];
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			free(current->value);
+			current->value = value;
+			free(key);
+			return ;
+		}
+		current = current->next;
+	}
 	new = malloc(sizeof(t_env_node) * 1);
 	if (!new)
 		return ;
 	new->key = key;
 	new->value = value;
-	new->next = NULL;
-	hash = ft_hash_djb2((unsigned char *)key);
-	index = hash % HASH_SIZE;
-	if (!items[index])
-		items[index] = new;
-	else
-	{
-		current = items[index];
-		while (current->next)
-			current = current->next;
-		current->next = new;
-	}
+	new->next = items[index];
+	items[index] = new;
 }
 
 static int	ft_key_len(char *str)
@@ -148,6 +151,32 @@ char	*ft_get_value(t_hash_table *hash_map, char *key)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	ft_free_hash_map(t_hash_table *hash_map)
+{
+	int			i;
+	t_env_node	*current;
+	t_env_node	*next;
+
+	if (!hash_map)
+		return ;
+	i = 0;
+	while (i < hash_map->size)
+	{
+		current = hash_map->items[i];
+		while (current)
+		{
+			next = current->next;
+			free(current->key);
+			free(current->value);
+			free(current);
+			current = next;
+		}
+		i++;
+	}
+	free(hash_map->items);
+	free(hash_map);
 }
 
 t_hash_table	*ft_init_hash_map(char **envp)

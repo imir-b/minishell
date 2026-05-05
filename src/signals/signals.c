@@ -59,6 +59,7 @@ int	ft_setup_signals_interactive(void)
 {
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	return (0);
 }
 
@@ -70,5 +71,6 @@ int	ft_setup_signals_exec(void)
 {
 	signal(SIGINT, ft_handle_sigint_child);
 	signal(SIGQUIT, ft_handle_sigquit_child);
+	signal(SIGTSTP, SIG_IGN);
 	return (0);
 }
