@@ -6,14 +6,13 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 22:19:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/05/06 13:54:40 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 14:01:56 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include "printf.h"
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
