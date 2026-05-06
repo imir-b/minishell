@@ -6,11 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:36:12 by vbleskin          #+#    #+#             */
-/*   Updated: 2025/11/14 21:30:24 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

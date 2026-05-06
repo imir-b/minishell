@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_super_join.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 01:10:23 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/20 01:11:39 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 char	*ft_super_join(char const *s1, char const *s2, char sep)
 {

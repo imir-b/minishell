@@ -6,11 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:38:41 by vbleskin          #+#    #+#             */
-/*   Updated: 2025/11/12 17:08:25 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {

@@ -6,11 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 22:11:49 by vbleskin          #+#    #+#             */
-/*   Updated: 2025/12/19 13:39:51 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 t_list	*ft_lstnew(void *content)
 {

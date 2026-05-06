@@ -6,11 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:37:11 by vbleskin          #+#    #+#             */
-/*   Updated: 2025/11/06 12:29:54 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

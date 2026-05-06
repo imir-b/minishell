@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:58:04 by username          #+#    #+#             */
-/*   Updated: 2026/04/15 23:15:28 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/06 13:55:41 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,15 @@
 # include <limits.h>
 # include <string.h>
 
-# include "libft.h"
-
-# include "data.h"
-
 # define HASH_SIZE 256
 
+# include "utils.h"
+# include "data.h"
 # include "init.h"
 # include "parsing.h"
 # include "exec.h"
 
-extern int  g_exit_status;
+extern int	g_exit_status;
 
 /* Debug */
 void	ft_print_tokens(t_token *tokens);

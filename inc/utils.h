@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 22:19:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/10 21:58:01 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/06 13:54:40 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef UTILS_H
+# define UTILS_H
 
 # include "printf.h"
 # include <stddef.h>
@@ -357,9 +357,9 @@ t_list		*ft_lstnew(void *content);
 /**
  * Ajoute l'element new au debut de la liste lst,
  * - t_list **lst : l'adresse du pointeur vers le premier element,
- * - t_list *new : l'element a ajouter.
+ * - t_list *elem : l'element a ajouter.
  */
-void		ft_lstadd_front(t_list **lst, t_list *new);
+void		ft_lstadd_front(t_list **lst, t_list *elem);
 
 /**
  * Compte le nombre d'elements de la liste,
@@ -378,9 +378,9 @@ t_list		*ft_lstlast(t_list *lst);
 /**
  * Ajoute l'element new a la fin de la liste,
  * - t_list **lst : l'adresse du pointeur vers le premier element,
- * - t_list *new : l'element a ajouter.
+ * - t_list *elem : l'element a ajouter.
  */
-void		ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_lstadd_back(t_list **lst, t_list *elem);
 
 /**
  * Supprime et libere la memoire d'un element,

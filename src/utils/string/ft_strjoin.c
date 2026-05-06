@@ -6,12 +6,12 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 16:44:54 by vbleskin          #+#    #+#             */
-/*   Updated: 2025/12/19 13:41:02 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
+#include "utils.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
