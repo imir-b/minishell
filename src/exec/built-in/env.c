@@ -34,7 +34,8 @@ void	ft_env(t_hash_table *hash_map)
 		current_item = hash_map->items[index];
 		while (current_item)
 		{
-			ft_print_item(current_item, STDOUT_FILENO);
+			if (current_item->is_exported)
+				ft_print_item(current_item, STDOUT_FILENO);
 			current_item = current_item->next;
 		}
 		index++;

@@ -50,11 +50,13 @@ int						ft_expand_node(t_ast *node, t_hash_table *hash_map);
 void					ft_free_hash_map(t_hash_table *hash_map);
 unsigned long			ft_hash_djb2(unsigned char *str);
 char					*ft_extract_key(char *str);
+int						ft_is_valid_key(char *key);
 char					*ft_expand_single_arg(char *arg,
 							t_hash_table *hash_map);
 char					*ft_get_value(t_hash_table *hash_map, char *key);
+t_env_node				*ft_find_env_node(t_hash_table *hash_map, char *key);
 void					ft_hash_table_insert(t_hash_table *hash_map,
-							char *key, char *value);
+							char *key, char *value, int export_flag);
 char					**ft_word_splitting(char **args);
 char					**ft_expand_wildcards(char **args);
 t_list					*ft_handle_star(char *arg);

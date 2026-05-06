@@ -60,7 +60,8 @@ static int	ft_count_env(t_hash_table *hash_map)
 		current = hash_map->items[i];
 		while (current)
 		{
-			count++;
+			if (current->is_exported)
+				count++;
 			current = current->next;
 		}
 		i++;
@@ -90,9 +91,12 @@ char	**ft_get_env_tab(t_hash_table *hash_map)
 		current = hash_map->items[i];
 		while (current)
 		{
-			tmp = ft_strjoin(current->key, "=");
-			env_tab[j++] = ft_strjoin(tmp, current->value);
-			free(tmp);
+			if (current->is_exported)
+			{
+				tmp = ft_strjoin(current->key, "=");
+				env_tab[j++] = ft_strjoin(tmp, current->value);
+				free(tmp);
+			}
 			current = current->next;
 		}
 		i++;

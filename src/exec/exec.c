@@ -14,6 +14,23 @@
 
 #include <sys/stat.h>
 
+static int	ft_is_assignment(char *arg)
+{
+	char	*eq;
+	char	*key;
+	int		res;
+
+	if (!arg)
+		return (0);
+	eq = ft_strchr(arg, '=');
+	if (!eq || eq == arg)
+		return (0);
+	key = ft_strndup(arg, eq - arg);
+	res = ft_is_valid_key(key);
+	free(key);
+	return (res);
+}
+
 /**
  * ft_is_builtin - Checks if a command is a shell built-in.
  */
@@ -81,6 +98,24 @@ static int	ft_handle_exec_error(char *cmd, char *path)
 	return (0);
 }
 
+static void	ft_apply_assignments(t_hash_table *hash_map, char **args, int count, int export_flag)
+{
+	int		i;
+	char	*eq;
+	char	*key;
+	char	*val;
+
+	i = 0;
+	while (i < count)
+	{
+		eq = ft_strchr(args[i], '=');
+		key = ft_strndup(args[i], eq - args[i]);
+		val = ft_strdup(eq + 1);
+		ft_hash_table_insert(hash_map, key, val, export_flag);
+		i++;
+	}
+}
+
 /**
  * ft_exec_command - Handles execution of simple commands.
  * Resolves path, forks, and executes using execve.
@@ -91,18 +126,42 @@ int	ft_exec_command(t_ast *node, t_minishell *data)
 	int		status;
 	char	**env_tab;
 	int		err;
+	int		i;
+	char	**original_args;
+	char	*original_cmd;
+	int		res;
 
-	if (!node->cmd_data->cmd || !*node->cmd_data->cmd)
-		return (0);
+	i = 0;
+	while (node->cmd_data->args[i] && ft_is_assignment(node->cmd_data->args[i]))
+		i++;
+	if (!node->cmd_data->args[i])
+	{
+		ft_apply_assignments(data->hash_map, node->cmd_data->args, i, 0);
+		return (g_exit_status = 0);
+	}
+	original_args = node->cmd_data->args;
+	original_cmd = node->cmd_data->cmd;
+	node->cmd_data->args = &original_args[i];
+	node->cmd_data->cmd = node->cmd_data->args[0];
 	if (ft_is_builtin(node->cmd_data->cmd))
-		return (ft_exec_builtin(node, data));
+	{
+		res = ft_exec_builtin(node, data);
+		node->cmd_data->args = original_args;
+		node->cmd_data->cmd = original_cmd;
+		return (res);
+	}
 	node->cmd_data->path = ft_get_cmd_path(node->cmd_data->cmd, data->hash_map);
 	err = ft_handle_exec_error(node->cmd_data->cmd, node->cmd_data->path);
 	if (err)
+	{
+		node->cmd_data->args = original_args;
+		node->cmd_data->cmd = original_cmd;
 		return (err);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_apply_assignments(data->hash_map, original_args, i, 1);
 		env_tab = ft_get_env_tab(data->hash_map);
 		execve(node->cmd_data->path, node->cmd_data->args, env_tab);
 		perror("execve");
@@ -111,6 +170,8 @@ int	ft_exec_command(t_ast *node, t_minishell *data)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
+	node->cmd_data->args = original_args;
+	node->cmd_data->cmd = original_cmd;
 	return (g_exit_status);
 }
 

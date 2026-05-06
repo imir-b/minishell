@@ -56,8 +56,8 @@ void    ft_cd(t_hash_table *hash_map, char *path)
         {
             g_exit_status = 0;
             if (oldpwd)
-                ft_hash_table_insert(hash_map, ft_strdup("OLDPWD"), ft_strdup(oldpwd));
-            ft_hash_table_insert(hash_map, ft_strdup("PWD"), getcwd(NULL, 0));
+                ft_hash_table_insert(hash_map, ft_strdup("OLDPWD"), ft_strdup(oldpwd), 0);
+            ft_hash_table_insert(hash_map, ft_strdup("PWD"), getcwd(NULL, 0), 0);
         }
     }
 }

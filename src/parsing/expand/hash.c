@@ -35,7 +35,23 @@ unsigned long	ft_hash_djb2(unsigned char *str)
 	return (hash);
 }
 
-void	ft_fill_item(t_env_node **items, char *key, char *value)
+int	ft_is_valid_key(char *key)
+{
+	int	i;
+
+	if (!key || (!ft_isalpha(key[0]) && key[0] != '_'))
+		return (0);
+	i = 1;
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_fill_item(t_env_node **items, char *key, char *value, int is_exported)
 {
 	unsigned long	hash;
 	int				index;
@@ -51,6 +67,7 @@ void	ft_fill_item(t_env_node **items, char *key, char *value)
 		{
 			free(current->value);
 			current->value = value;
+			current->is_exported = is_exported;
 			free(key);
 			return ;
 		}
@@ -61,6 +78,7 @@ void	ft_fill_item(t_env_node **items, char *key, char *value)
 		return ;
 	new->key = key;
 	new->value = value;
+	new->is_exported = is_exported;
 	new->next = items[index];
 	items[index] = new;
 }
@@ -125,7 +143,25 @@ void	ft_update_shlvl(t_hash_table *hash_map)
 		}
 		current = current->next;
 	}
-	ft_hash_table_insert(hash_map, ft_strdup("SHLVL"), ft_itoa(shlvl));
+	ft_hash_table_insert(hash_map, ft_strdup("SHLVL"), ft_itoa(shlvl), 1);
+}
+
+t_env_node	*ft_find_env_node(t_hash_table *hash_map, char *key)
+{
+	t_env_node	*current;
+	int			index;
+
+	if (!hash_map || !key)
+		return (NULL);
+	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
+	current = hash_map->items[index];
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
 }
 
 /**
@@ -195,7 +231,7 @@ t_hash_table	*ft_init_hash_map(char **envp)
 	{
 		key = ft_extract_key(envp[count]);
 		value = ft_strdup((ft_strchr(envp[count], '=')) + 1);
-		ft_fill_item(items, key, value);
+		ft_fill_item(items, key, value, 1);
 		count++;
 	}
 	hash_map = malloc(sizeof(t_hash_table) * 1);

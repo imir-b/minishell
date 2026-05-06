@@ -93,6 +93,7 @@ struct s_env_node
 {
 	char		*key;
 	char		*value;
+	int			is_exported;
 	t_env_node	*next;
 };
 
