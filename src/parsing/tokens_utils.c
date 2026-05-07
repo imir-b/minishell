@@ -70,6 +70,20 @@ void	ft_token_add_back(t_token **tokens, t_token *new_token)
 	(*tokens)->prev = new_token;
 }
 
+void	ft_free_token_pair(t_token *t1, t_token *t2)
+{
+	if (t1)
+	{
+		free(t1->value);
+		free(t1);
+	}
+	if (t2)
+	{
+		free(t2->value);
+		free(t2);
+	}
+}
+
 t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name,
 			t_token *first)
 {

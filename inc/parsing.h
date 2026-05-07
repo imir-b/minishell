@@ -27,6 +27,7 @@ t_token					*ft_find_operator(t_token *f, t_token_type t1,
 t_token					*ft_tokenizer(char *command_line);
 t_token					*ft_extract_redir_tokens(t_token *op, t_token *file,
 							t_token *first);
+void					ft_free_token_pair(t_token *t1, t_token *t2);
 void					*ft_free_tokens(t_token *tokens);
 void					ft_break_circle(t_token *first);
 void					ft_free_ast(t_ast *self);

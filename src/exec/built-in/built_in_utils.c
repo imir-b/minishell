@@ -6,9 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 01:00:48 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/05/08 01:01:17 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/08 01:21:00 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 void	ft_sort_env(char **env)
 {
