@@ -26,7 +26,8 @@ static t_env_node	*ft_create_env_node(char *key, char *value, int export_flag)
 	return (new);
 }
 
-static int	ft_update_existing_key(t_env_node *head, char *key, char *value, int exp)
+static int	ft_update_existing_key(t_env_node *head, char *key,
+	char *value, int exp)
 {
 	t_env_node	*current;
 

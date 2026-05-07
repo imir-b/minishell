@@ -51,16 +51,28 @@ int	ft_handle_dollar(char *str, char *ret, int *j, t_hash_table *map)
 	return (i_adv);
 }
 
-static void	ft_handle_quotes_exp(char *arg, int *i, char *ret, int *j, int *q)
+static void	ft_handle_quotes_exp(char *arg, int *i, char *ret, int *vars)
 {
+	int	*j;
+	int	*q;
+
+	j = &vars[0];
+	q = &vars[1];
 	*q ^= arg[*i];
-	ret[(*j)++] = (arg[*i] == '\'') ? '\x01' : '\x02';
+	if (arg[*i] == '\'')
+		ret[(*j)++] = '\x01';
+	else
+		ret[(*j)++] = '\x02';
 	(*i)++;
 }
 
-static void	ft_handle_dollar_in_arg(char *arg, int *i, char *ret,
-	int *j, t_hash_table *map)
+static void	ft_handle_dollar_in_arg(char *arg, int *i, char *ret, void **data)
 {
+	int				*j;
+	t_hash_table	*map;
+
+	j = (int *)data[0];
+	map = (t_hash_table *)data[1];
 	if (!arg[*i + 1] || (arg[*i + 1] != '\'' && arg[*i + 1] != '\"'))
 		*i += ft_handle_dollar(&arg[*i], ret, j, map);
 	else
@@ -70,24 +82,25 @@ static void	ft_handle_dollar_in_arg(char *arg, int *i, char *ret,
 char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 {
 	int		i;
-	int		j;
-	int		q;
+	int		vars[2];
+	void	*data[2];
 	char	*ret;
 
-	i = 0;
-	j = 0;
-	q = 0;
+	(vars[0] = 0, vars[1] = 0, i = 0);
 	ret = malloc(sizeof(char) * (ft_expanded_len(arg, hash_map) + 1));
 	if (!ret)
 		return (NULL);
 	while (arg[i])
 	{
-		if ((arg[i] == '\'' || arg[i] == '\"') && (!q || q == arg[i]))
-			ft_handle_quotes_exp(arg, &i, ret, &j, &q);
-		else if (arg[i] == '$' && q != '\'')
-			ft_handle_dollar_in_arg(arg, &i, ret, &j, hash_map);
+		if ((arg[i] == '\'' || arg[i] == '\"') && (!vars[1] || vars[1] == arg[i]))
+			ft_handle_quotes_exp(arg, &i, ret, vars);
+		else if (arg[i] == '$' && vars[1] != '\'')
+		{
+			(data[0] = &vars[0], data[1] = hash_map);
+			ft_handle_dollar_in_arg(arg, &i, ret, data);
+		}
 		else
-			ret[j++] = arg[i++];
+			ret[vars[0]++] = arg[i++];
 	}
-	return (ret[j] = '\0', ret);
+	return (ret[vars[0]] = '\0', ret);
 }

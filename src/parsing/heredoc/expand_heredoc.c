@@ -48,7 +48,7 @@ char	*ft_expand_heredoc_line(char *line, t_hash_table *hash_map)
 	while (line[i])
 	{
 		if (line[i] == '$')
-			i +=ft_handle_dollar(&line[i], expanded_line, &j, hash_map);
+			i += ft_handle_dollar(&line[i], expanded_line, &j, hash_map);
 		else
 			expanded_line[j++] = line[i++];
 	}

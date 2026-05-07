@@ -52,7 +52,8 @@ void	ft_exit(t_minishell *data, char **args)
 			ft_exit_error(args[1], data);
 		if (args[2])
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: too many arguments\n",
+				STDERR_FILENO);
 			g_exit_status = 1;
 			return ;
 		}

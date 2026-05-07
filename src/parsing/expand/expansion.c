@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-/*
-Etape 1 : expand variables
-Etape 2 : word splitting
-Etape 3 : wildcards
-Etape 4 : remove quotes
-*/
-
-/*
-- Handle ’ (single quote) which should prevent the shell from
-interpreting the meta-characters in the quoted sequence.
-- Handle " (double quote) which should prevent the shell from
-interpreting the meta-characters in the quoted sequence except
-for $ (dollar sign)
-*/
-
 static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 {
 	int		i;
@@ -49,6 +34,16 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 	return (0);
 }
 
+static int	ft_get_word_count(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args && args[count])
+		count++;
+	return (count);
+}
+
 static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 {
 	char	*orig;
@@ -56,7 +51,6 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	char	**temp;
 	char	**split;
 	char	**wild_exp;
-	int		count;
 
 	orig = ft_strdup(node->redir_data->file);
 	new = ft_expand_single_arg(node->redir_data->file, map);
@@ -66,21 +60,17 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	(temp[0] = new, temp[1] = NULL);
 	split = ft_word_splitting(temp);
 	wild_exp = ft_expand_wildcards(split);
-	count = 0;
-	while (wild_exp && wild_exp[count])
-		count++;
-	if (count != 1)
-		return (ft_free_tab(wild_exp), ft_ambiguous_redirect_err(orig),
-			free(orig), 1);
+	if (ft_get_word_count(wild_exp) != 1)
+	{
+		ft_free_tab(wild_exp);
+		ft_ambiguous_redirect_err(orig);
+		return (free(orig), 1);
+	}
 	free(node->redir_data->file);
 	node->redir_data->file = ft_remove_quotes(wild_exp[0]);
 	return (ft_free_tab(wild_exp), free(orig), 0);
 }
 
-/**
-* ft_expand_node - Expands variables, wildcards and removes quotes for a single node.
-* This is called during execution to ensure environment changes are reflected.
-*/
 int	ft_expand_node(t_ast *node, t_hash_table *hash_map)
 {
 	if (!node)

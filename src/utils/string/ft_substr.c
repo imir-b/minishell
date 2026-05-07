@@ -13,7 +13,7 @@
 #include "utils.h"
 
 static int	ft_alloc(char **str, int size, int count)
-{		
+{
 	*str = malloc(count * size);
 	if (!*str)
 		return (0);

@@ -22,7 +22,8 @@ static void	ft_export_single(t_hash_table *hash_map, char *arg)
 	eq = ft_strchr(arg, '=');
 	if (!eq)
 	{
-		if (ft_is_valid_key(arg) && (node = ft_find_env_node(hash_map, arg)))
+		node = ft_find_env_node(hash_map, arg);
+		if (ft_is_valid_key(arg) && node)
 			node->is_exported = 1;
 		else if (!ft_is_valid_key(arg))
 		{

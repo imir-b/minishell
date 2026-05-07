@@ -6,27 +6,32 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 03:54:40 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/27 13:55:10 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	* Affiche le bandeau ascii au lancement de minishell
-	*/
 void	ft_print_ascii(void)
 {
 	printf("\033[35m       .             *              .              *\033[0m\n");
 	printf("\033[35m  *           ☾             .               *              .\033[0m\n");
-	printf("\033[33m      _____ _    _ ______ ______  _____ _    _ ______ _      _\033[0m\n");
-	printf("\033[33m     |_   _| |  | |  ____|  ____|/ ____| |  | |  ____| |    | |\033[0m\n");
-	printf("\033[33m       | | | |  | | |__  | |__  | (___ | |__| | |__  | |    | |\033[0m\n");
-	printf("\033[33m       | | | |  | |  __| |  __|  \\___ \\|  __  |  __| | |    | |\033[0m\n");
-	printf("\033[33m       | | | |__| | |    | |     ____) | |  | | |____| |____| |____\033[0m\n");
-	printf("\033[33m       |_|  \\____/|_|    |_|    |_____/|_|  |_|______|______|______|\033[0m\n");
-	printf("\033[31m  .                                                                      *\033[0m\n");
-	printf("\033[31m        *             ☭             .             ☭              *\033[0m\n\n");
+	printf("\033[33m      _____ _    _ ______ ______  ");
+	printf("_____ _    _ ______ _      _\033[0m\n");
+	printf("\033[33m     |_   _| |  | |  ____|  ____|/ ");
+	printf("____| |  | |  ____| |    | |\033[0m\n");
+	printf("\033[33m       | | | |  | | |__  | |__  | (");
+	printf("___ | |__| | |__  | |    | |\033[0m\n");
+	printf("\033[33m       | | | |  | |  __| |  __|  \\");
+	printf("___ \\|  __  |  __| | |    | |\033[0m\n");
+	printf("\033[33m       | | | |__| | |    | |     __");
+	printf("__) | |  | | |____| |____| |____\033[0m\n");
+	printf("\033[33m       |_|  \\____/|_|    |_|    |__");
+	printf("___/|_|  |_|______|______|______|\033[0m\n");
+	printf("\033[31m  .                               ");
+	printf("                                       *\033[0m\n");
+	printf("\033[31m        *             ☭             .");
+	printf("             ☭              *\033[0m\n\n");
 }
 
 int	ft_check_unclosed_quotes(char *line)
@@ -51,30 +56,39 @@ int	ft_check_unclosed_quotes(char *line)
 	return (0);
 }
 
-int	ft_check_syntax(t_token *tokens)
+static int	ft_check_syntax_ops(t_token *tokens)
 {
-	if (tokens->type == TOK_PIPE || tokens->type == TOK_AND || tokens->type == TOK_OR)
-		return (ft_syntax_error(tokens->value));
-	while (tokens)
+	if (tokens->type == TOK_PIPE || tokens->type == TOK_AND
+		|| tokens->type == TOK_OR)
 	{
-		if (tokens->type == TOK_L_PAREN && tokens->next->type == TOK_R_PAREN)
-			return (ft_syntax_error(")"));
-		if (tokens->type >= TOK_REDIR_IN && tokens->type <= TOK_HEREDOC)
+		if (!tokens->next || tokens->next->type == TOK_PIPE
+			|| tokens->next->type == TOK_AND || tokens->next->type == TOK_OR)
 		{
-			if (!tokens->next || tokens->next->type != TOK_WORD)
+			if (tokens->next)
+				return (ft_syntax_error(tokens->next->value));
+			else
+				return (ft_syntax_error("newline"));
+		}
+	}
+	return (0);
+}
+
+int	ft_check_syntax(t_token *t)
+{
+	if (t->type == TOK_PIPE || t->type == TOK_AND || t->type == TOK_OR)
+		return (ft_syntax_error(t->value));
+	while (t)
+	{
+		if (t->type == TOK_L_PAREN && t->next->type == TOK_R_PAREN)
+			return (ft_syntax_error(")"));
+		if (t->type >= TOK_REDIR_IN && t->type <= TOK_HEREDOC)
+		{
+			if (!t->next || t->next->type != TOK_WORD)
 				return (ft_syntax_error("newline or redirection file"));
 		}
-		if (tokens->type == TOK_PIPE || tokens->type == TOK_AND || tokens->type == TOK_OR)
-		{
-			if (!tokens->next || tokens->next->type == TOK_PIPE || tokens->next->type == TOK_AND || tokens->next->type == TOK_OR)
-			{
-				if (tokens->next)
-					return (ft_syntax_error(tokens->next->value));
-				else
-					return (ft_syntax_error("newline"));
-			}
-		}
-		tokens = tokens->next;
+		if (ft_check_syntax_ops(t))
+			return (1);
+		t = t->next;
 	}
 	return (0);
 }

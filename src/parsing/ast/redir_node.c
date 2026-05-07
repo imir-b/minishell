@@ -74,10 +74,13 @@ t_ast	*ft_create_redir_node(t_token *curr, t_token *first, t_minishell *data)
 	file = curr->next;
 	if (!file)
 		return (NULL);
-	if (curr == first && (first = ft_extract_redir_tokens(curr, file, first))
-		&& first->type == TOK_L_PAREN)
-		return (ft_syntax_error("("), NULL);
-	else if (curr != first)
+	if (curr == first)
+	{
+		first = ft_extract_redir_tokens(curr, file, first);
+		if (first && first->type == TOK_L_PAREN)
+			return (ft_syntax_error("("), NULL);
+	}
+	else
 		first = ft_extract_redir_tokens(curr, file, first);
 	node = ft_alloc_redir_node();
 	if (!node)

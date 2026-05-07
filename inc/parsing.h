@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:56:22 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/27 14:32:55 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,24 @@
 # include "minishell.h"
 
 int						ft_is_space(char c);
-
-/**
-	* Fonction utilitaire qui cherche 'c' dans 'charset' et renvoie 1 si trouve.
-	*/
 int						ft_is_in_charset(char c, char *charset);
 char					*ft_extract_word(char *command_line, int *i);
 char					*ft_extract_operator(char *command_line, int *i);
 t_token					*ft_new_token(char *value, t_token_type type);
 void					ft_token_add_back(t_token **tokens, t_token *new_token);
 t_token					*ft_token_last(t_token *first);
-t_token					*ft_find_operator(t_token *first, t_token_type type1,
-							t_token_type type2);
+t_token					*ft_find_operator(t_token *f, t_token_type t1,
+							t_token_type t2);
 t_token					*ft_tokenizer(char *command_line);
-t_token					*ft_extract_redir_tokens(t_token *op, t_token *file_name,
+t_token					*ft_extract_redir_tokens(t_token *op, t_token *file,
 							t_token *first);
 void					*ft_free_tokens(t_token *tokens);
 void					ft_break_circle(t_token *first);
 void					ft_free_ast(t_ast *self);
 
-
-t_ast					*ft_create_and_or_node(t_token *current, t_token *first,
+t_ast					*ft_create_and_or_node(t_token *curr, t_token *first,
 							t_minishell *data);
-t_ast					*ft_create_pipe_node(t_token *current, t_token *first,
+t_ast					*ft_create_pipe_node(t_token *curr, t_token *first,
 							t_minishell *data);
 t_ast					*ft_create_subshell_node(t_token *current,
 							t_minishell *data);

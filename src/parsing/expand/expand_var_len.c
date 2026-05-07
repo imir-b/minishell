@@ -40,9 +40,14 @@ int	ft_process_dollar(char *arg, int *i, t_hash_table *hash_map)
 	return (len);
 }
 
-static void	ft_process_char_len(char *arg, int *i, int *len,
-	int *quotes, t_hash_table *hash_map)
+static void	ft_process_char_len(char *arg, int *i, int *len_q,
+	t_hash_table *hash_map)
 {
+	int	*len;
+	int	*quotes;
+
+	len = &len_q[0];
+	quotes = &len_q[1];
 	if ((arg[*i] == '\'' || arg[*i] == '\"') && (!*quotes || *quotes == arg[*i]))
 	{
 		*quotes ^= arg[*i];
@@ -66,13 +71,12 @@ static void	ft_process_char_len(char *arg, int *i, int *len,
 int	ft_expanded_len(char *arg, t_hash_table *hash_map)
 {
 	int	i;
-	int	quotes;
-	int	len;
+	int	len_q[2];
 
 	i = 0;
-	quotes = 0;
-	len = 0;
+	len_q[0] = 0;
+	len_q[1] = 0;
 	while (arg[i])
-		ft_process_char_len(arg, &i, &len, &quotes, hash_map);
-	return (len);
+		ft_process_char_len(arg, &i, len_q, hash_map);
+	return (len_q[0]);
 }

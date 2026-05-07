@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 19:13:06 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_strndup(char *src, size_t n)
 {
 	char	*dest;
 	size_t	len;
+	size_t	i;
 
 	len = 0;
 	while (src[len] && len < n)
@@ -23,7 +24,6 @@ char	*ft_strndup(char *src, size_t n)
 	dest = malloc(sizeof(char) * (len + 1));
 	if (!dest)
 		return (NULL);
-	size_t	i;
 	i = 0;
 	while (i < len)
 	{
