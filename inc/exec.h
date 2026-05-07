@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:17:07 by vlad              #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Updated: 2026/05/08 01:01:40 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_echo(char **args);
 void	ft_env(t_hash_table *hash_map);
 void	ft_exit(t_minishell *data, char **args);
 void	ft_export(t_hash_table *hash_map, char **args);
+void	ft_sort_env(char **env);
 void	ft_pwd(void);
 void	ft_unset(t_hash_table *hash_map, char *key);
 

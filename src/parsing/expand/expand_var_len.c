@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:05:34 by username          #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Updated: 2026/05/08 01:10:39 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	ft_process_char_len(char *arg, int *i, int *len_q,
 
 	len = &len_q[0];
 	quotes = &len_q[1];
-	if ((arg[*i] == '\'' || arg[*i] == '\"') && (!*quotes || *quotes == arg[*i]))
+	if ((arg[*i] == '\'' || arg[*i] == '\"')
+		&& (!*quotes || *quotes == arg[*i]))
 	{
 		*quotes ^= arg[*i];
 		(*len)++;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:05:34 by username          #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Created: 2026/04/06 18:05:34 by vbleskin          #+#    #+#             */
+/*   Updated: 2026/05/08 01:15:33 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,19 @@ char	*ft_expand_single_arg(char *arg, t_hash_table *hash_map)
 	void	*data[2];
 	char	*ret;
 
-	(vars[0] = 0, vars[1] = 0, i = 0);
+	vars[0] = ((vars[1] = (i = 0)));
 	ret = malloc(sizeof(char) * (ft_expanded_len(arg, hash_map) + 1));
 	if (!ret)
 		return (NULL);
 	while (arg[i])
 	{
-		if ((arg[i] == '\'' || arg[i] == '\"') && (!vars[1] || vars[1] == arg[i]))
+		if ((arg[i] == '\'' || arg[i] == '\"')
+			&& (!vars[1] || vars[1] == arg[i]))
 			ft_handle_quotes_exp(arg, &i, ret, vars);
 		else if (arg[i] == '$' && vars[1] != '\'')
 		{
-			(data[0] = &vars[0], data[1] = hash_map);
+			data[0] = &vars[0];
+			data[1] = hash_map;
 			ft_handle_dollar_in_arg(arg, &i, ret, data);
 		}
 		else

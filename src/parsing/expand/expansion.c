@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Updated: 2026/05/08 01:12:04 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 	temp = malloc(sizeof(char *) * 2);
 	if (!temp)
 		return (free(orig), free(new), 1);
-	(temp[0] = new, temp[1] = NULL);
+	temp[0] = new;
+	temp[1] = NULL;
 	split = ft_word_splitting(temp);
 	wild_exp = ft_expand_wildcards(split);
 	if (ft_get_word_count(wild_exp) != 1)

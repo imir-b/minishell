@@ -6,11 +6,19 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:21 by vlad              #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Updated: 2026/05/08 01:01:05 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	ft_export_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	g_exit_status = 1;
+}
 
 static void	ft_export_single(t_hash_table *hash_map, char *arg)
 {
@@ -26,48 +34,18 @@ static void	ft_export_single(t_hash_table *hash_map, char *arg)
 		if (ft_is_valid_key(arg) && node)
 			node->is_exported = 1;
 		else if (!ft_is_valid_key(arg))
-		{
-			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-			ft_putstr_fd(arg, STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-			g_exit_status = 1;
-		}
+			ft_export_error(arg);
 		return ;
 	}
 	key = ft_strndup(arg, eq - arg);
 	if (!ft_is_valid_key(key))
 	{
-		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		return (g_exit_status = 1, (void)free(key));
+		ft_export_error(arg);
+		free(key);
+		return ;
 	}
 	value = ft_strdup(eq + 1);
 	ft_hash_table_insert(hash_map, key, value, 1);
-}
-
-static void	ft_sort_env(char **env)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	i = 0;
-	while (env[i])
-	{
-		j = i + 1;
-		while (env[j])
-		{
-			if (ft_strcmp(env[i], env[j]) > 0)
-			{
-				tmp = env[i];
-				env[i] = env[j];
-				env[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
 }
 
 static void	ft_print_export_node(char *env_line)

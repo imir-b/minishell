@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:44:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
+/*   Updated: 2026/05/08 01:18:09 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,15 @@ t_ast	*ft_create_redir_node(t_token *curr, t_token *first, t_minishell *data)
 	file = curr->next;
 	if (!file)
 		return (NULL);
-	if (curr == first)
-	{
-		first = ft_extract_redir_tokens(curr, file, first);
-		if (first && first->type == TOK_L_PAREN)
-			return (ft_syntax_error("("), NULL);
-	}
-	else
-		first = ft_extract_redir_tokens(curr, file, first);
+	next = first;
+	first = ft_extract_redir_tokens(curr, file, first);
+	if (curr == next && first && first->type == TOK_L_PAREN)
+		return (ft_syntax_error("("), NULL);
 	node = ft_alloc_redir_node();
 	if (!node)
 		return (NULL);
 	ft_assign_redir_type(curr, file, node);
-	(free(curr->value), free(curr), free(file->value), free(file));
+	ft_free_token_pair(curr, file);
 	next = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
 	if (next)
 		node->left = ft_create_redir_node(next, first, data);
