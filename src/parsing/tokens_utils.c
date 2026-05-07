@@ -69,3 +69,20 @@ void	ft_token_add_back(t_token **tokens, t_token *new_token)
 	new_token->next = *tokens;
 	(*tokens)->prev = new_token;
 }
+
+t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name,
+			t_token *first)
+{
+	t_token	*prev_tok;
+	t_token	*next_tok;
+
+	prev_tok = op->prev;
+	next_tok = file_name->next;
+	if (prev_tok)
+		prev_tok->next = next_tok;
+	if (next_tok)
+		next_tok->prev = prev_tok;
+	if (op == first)
+		return (next_tok);
+	return (first);
+}

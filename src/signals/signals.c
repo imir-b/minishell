@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 /**
- * ft_handle_sigint - Signal handler for Ctrl-C in interactive mode.
- * Moves the prompt to a new line and redisplays.
- */
+	* ft_handle_sigint - Signal handler for Ctrl-C in interactive mode.
+	* Moves the prompt to a new line and redisplays.
+	*/
 void	ft_handle_sigint(int sig)
 {
 	if (sig == SIGINT)
@@ -29,8 +29,8 @@ void	ft_handle_sigint(int sig)
 }
 
 /**
- * ft_handle_sigint_child - Signal handler for Ctrl-C during execution.
- */
+	* ft_handle_sigint_child - Signal handler for Ctrl-C during execution.
+	*/
 void	ft_handle_sigint_child(int sig)
 {
 	if (sig == SIGINT)
@@ -41,8 +41,8 @@ void	ft_handle_sigint_child(int sig)
 }
 
 /**
- * ft_handle_sigquit_child - Signal handler for Ctrl-\ during execution.
- */
+	* ft_handle_sigquit_child - Signal handler for Ctrl-\ during execution.
+	*/
 void	ft_handle_sigquit_child(int sig)
 {
 	if (sig == SIGQUIT)
@@ -53,8 +53,8 @@ void	ft_handle_sigquit_child(int sig)
 }
 
 /**
- * ft_setup_signals_interactive - Configures signals for the main shell loop.
- */
+	* ft_setup_signals_interactive - Configures signals for the main shell loop.
+	*/
 int	ft_setup_signals_interactive(void)
 {
 	signal(SIGINT, ft_handle_sigint);
@@ -64,9 +64,9 @@ int	ft_setup_signals_interactive(void)
 }
 
 /**
- * ft_setup_signals_exec - Configures signals during command execution.
- * Allows child processes to receive signals normally.
- */
+	* ft_setup_signals_exec - Configures signals during command execution.
+	* Allows child processes to receive signals normally.
+	*/
 int	ft_setup_signals_exec(void)
 {
 	signal(SIGINT, ft_handle_sigint_child);

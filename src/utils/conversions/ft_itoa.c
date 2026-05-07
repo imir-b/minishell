@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 11:23:17 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ char	*ft_itoa(int n)
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	str[len] = '\0';
-	len--;
+	str[len--] = '\0';
 	if (nbr == 0)
 		str[0] = '0';
 	if (nbr < 0)
@@ -54,9 +53,8 @@ char	*ft_itoa(int n)
 	}
 	while (nbr > 0)
 	{
-		str[len] = (nbr % 10) + '0';
+		str[len--] = (nbr % 10) + '0';
 		nbr /= 10;
-		len--;
 	}
 	return (str);
 }

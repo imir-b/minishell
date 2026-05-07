@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:01:31 by username          #+#    #+#             */
-/*   Updated: 2026/04/26 17:42:56 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,28 @@ t_token_type	ft_get_token_type(char *value)
 	return (TOK_WORD);
 }
 
+static int	ft_handle_operator(char *line, int *i, t_token **tokens)
+{
+	char	*val;
+	t_token	*new;
+
+	val = ft_extract_operator(line, i);
+	if (val[0] == '&' && val[1] == '\0')
+	{
+		ft_syntax_error("&");
+		free(val);
+		return (1);
+	}
+	new = ft_new_token(val, ft_get_token_type(val));
+	ft_token_add_back(tokens, new);
+	return (0);
+}
+
 t_token	*ft_tokenizer(char *command_line)
 {
 	t_token	*tokens;
-	t_token	*new_token;
-	char	*value;
+	t_token	*new;
+	char	*val;
 	int		i;
 
 	tokens = NULL;
@@ -50,21 +67,14 @@ t_token	*ft_tokenizer(char *command_line)
 			i++;
 		else if (ft_is_in_charset(command_line[i], "|<>&()"))
 		{
-			value = ft_extract_operator(command_line, &i);
-			if (value[0] == '&' && value[1] == '\0')
-			{
-				ft_syntax_error("&");
-				free(value);
+			if (ft_handle_operator(command_line, &i, &tokens))
 				return (ft_free_tokens(tokens));
-			}
-			new_token = ft_new_token(value, ft_get_token_type(value));
-			ft_token_add_back(&tokens, new_token);
 		}
 		else
 		{
-			value = ft_extract_word(command_line, &i);
-			new_token = ft_new_token(value, TOK_WORD);
-			ft_token_add_back(&tokens, new_token);
+			val = ft_extract_word(command_line, &i);
+			new = ft_new_token(val, TOK_WORD);
+			ft_token_add_back(&tokens, new);
 		}
 	}
 	return (tokens);
@@ -76,8 +86,6 @@ t_token	*ft_token_last(t_token *first)
 
 	last = first;
 	while (last->next)
-	{
 		last = last->next;
-	}
 	return (last);
 }

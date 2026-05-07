@@ -3,42 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:34 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/15 01:01:30 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	ft_remove_env_node(t_hash_table *h_m, int idx,
+	t_env_node *curr, t_env_node *prev)
+{
+	if (prev)
+		prev->next = curr->next;
+	else
+		h_m->items[idx] = curr->next;
+	free(curr->key);
+	free(curr->value);
+	free(curr);
+}
+
 void	ft_unset(t_hash_table *hash_map, char *key)
 {
-	unsigned long	hash;
 	int				index;
-	t_env_node		*current;
+	t_env_node		*curr;
 	t_env_node		*prev;
 
 	if (key == NULL)
 		return ;
-	hash = ft_hash_djb2((unsigned char *)key);
-	index = hash % HASH_SIZE;
-	current = hash_map->items[index];
+	index = ft_hash_djb2((unsigned char *)key) % HASH_SIZE;
+	curr = hash_map->items[index];
 	prev = NULL;
-	while (current)
+	while (curr)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strcmp(curr->key, key) == 0)
 		{
-			if (prev)
-				prev->next = current->next;
-			else
-				hash_map->items[index] = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			ft_remove_env_node(hash_map, index, curr, prev);
 			return ;
 		}
-		prev = current;
-		current = current->next;
+		prev = curr;
+		curr = curr->next;
 	}
 }

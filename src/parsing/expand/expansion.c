@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:06:23 by username          #+#    #+#             */
-/*   Updated: 2026/04/27 22:40:20 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ Etape 1 : expand variables
 Etape 2 : word splitting
 Etape 3 : wildcards
 Etape 4 : remove quotes
-
-// TODO ->>>> stocker et recuperer le code erreur de la derniere commande si ?$
 */
 
 /*
@@ -53,38 +51,36 @@ static int	ft_expand_cmd_node(t_ast *node, t_hash_table *map)
 
 static int	ft_expand_redir_node(t_ast *node, t_hash_table *map)
 {
-	char	*original;
+	char	*orig;
 	char	*new;
 	char	**temp;
 	char	**split;
-	char	**wildcard_exp;
-	int		word_count;
+	char	**wild_exp;
+	int		count;
 
-	original = ft_strdup(node->redir_data->file);
+	orig = ft_strdup(node->redir_data->file);
 	new = ft_expand_single_arg(node->redir_data->file, map);
 	temp = malloc(sizeof(char *) * 2);
 	if (!temp)
-		return (free(original), free(new), 1);
-	temp[0] = new;
-	temp[1] = NULL;
+		return (free(orig), free(new), 1);
+	(temp[0] = new, temp[1] = NULL);
 	split = ft_word_splitting(temp);
-	wildcard_exp = ft_expand_wildcards(split);
-	word_count = 0;
-	while (wildcard_exp && wildcard_exp[word_count])
-		word_count++;
-	if (word_count != 1)
-		return (ft_free_tab(wildcard_exp),
-			ft_ambiguous_redirect_err(original), free(original), 1);
+	wild_exp = ft_expand_wildcards(split);
+	count = 0;
+	while (wild_exp && wild_exp[count])
+		count++;
+	if (count != 1)
+		return (ft_free_tab(wild_exp), ft_ambiguous_redirect_err(orig),
+			free(orig), 1);
 	free(node->redir_data->file);
-	node->redir_data->file = ft_remove_quotes(wildcard_exp[0]);
-	return (ft_free_tab(wildcard_exp), free(original), 0);
+	node->redir_data->file = ft_remove_quotes(wild_exp[0]);
+	return (ft_free_tab(wild_exp), free(orig), 0);
 }
 
 /**
 * ft_expand_node - Expands variables, wildcards and removes quotes for a single node.
 * This is called during execution to ensure environment changes are reflected.
 */
-
 int	ft_expand_node(t_ast *node, t_hash_table *hash_map)
 {
 	if (!node)

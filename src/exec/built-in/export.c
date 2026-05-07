@@ -6,62 +6,11 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:21 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/27 14:20:32 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_update_existing_key(t_env_node *head, char *key, char *value, int export_flag)
-{
-	t_env_node	*current;
-
-	current = head;
-	while (current)
-	{
-		if (!ft_strcmp(current->key, key))
-		{
-			free(current->value);
-			current->value = value;
-			if (export_flag)
-				current->is_exported = 1;
-			free(key);
-			return (1);
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-void	ft_hash_table_insert(t_hash_table *hash_map, char *key, char *value, int export_flag)
-{
-	unsigned long	hash;
-	int				index;
-	t_env_node		*new;
-	t_env_node		*current;
-
-	hash = ft_hash_djb2((unsigned char *)key);
-	index = hash % HASH_SIZE;
-	if (hash_map->items[index]
-		&& ft_update_existing_key(hash_map->items[index], key, value, export_flag))
-		return ;
-	new = malloc(sizeof(t_env_node) * 1);
-	if (!new)
-		return ;
-	new->key = key;
-	new->value = value;
-	new->is_exported = export_flag;
-	new->next = NULL;
-	if (!hash_map->items[index])
-		hash_map->items[index] = new;
-	else
-	{
-		current = hash_map->items[index];
-		while (current->next)
-			current = current->next;
-		current->next = new;
-	}
-}
 
 static void	ft_export_single(t_hash_table *hash_map, char *arg)
 {
@@ -73,13 +22,9 @@ static void	ft_export_single(t_hash_table *hash_map, char *arg)
 	eq = ft_strchr(arg, '=');
 	if (!eq)
 	{
-		if (ft_is_valid_key(arg))
-		{
-			node = ft_find_env_node(hash_map, arg);
-			if (node)
-				node->is_exported = 1;
-		}
-		else
+		if (ft_is_valid_key(arg) && (node = ft_find_env_node(hash_map, arg)))
+			node->is_exported = 1;
+		else if (!ft_is_valid_key(arg))
 		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(arg, STDERR_FILENO);
@@ -94,9 +39,7 @@ static void	ft_export_single(t_hash_table *hash_map, char *arg)
 		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		g_exit_status = 1;
-		free(key);
-		return ;
+		return (g_exit_status = 1, (void)free(key));
 	}
 	value = ft_strdup(eq + 1);
 	ft_hash_table_insert(hash_map, key, value, 1);
@@ -126,11 +69,25 @@ static void	ft_sort_env(char **env)
 	}
 }
 
+static void	ft_print_export_node(char *env_line)
+{
+	char	*eq;
+
+	printf("declare -x ");
+	eq = ft_strchr(env_line, '=');
+	if (eq)
+	{
+		*eq = '\0';
+		printf("%s=\"%s\"\n", env_line, eq + 1);
+	}
+	else
+		printf("%s\n", env_line);
+}
+
 static void	ft_print_export(t_hash_table *hash_map)
 {
 	char	**env;
 	int		i;
-	char	*eq;
 
 	env = ft_get_env_tab(hash_map);
 	if (!env)
@@ -139,15 +96,7 @@ static void	ft_print_export(t_hash_table *hash_map)
 	i = 0;
 	while (env[i])
 	{
-		printf("declare -x ");
-		eq = ft_strchr(env[i], '=');
-		if (eq)
-		{
-			*eq = '\0';
-			printf("%s=\"%s\"\n", env[i], eq + 1);
-		}
-		else
-			printf("%s\n", env[i]);
+		ft_print_export_node(env[i]);
 		i++;
 	}
 	ft_free_tab(env);

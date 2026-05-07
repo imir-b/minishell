@@ -13,10 +13,10 @@
 #include "minishell.h"
 
 /**
- * ft_exec_logical - Implements && and || logic.
- * Respects Bash behavior: && executes right if left succeeds,
- * || executes right if left fails.
- */
+	* ft_exec_logical - Implements && and || logic.
+	* Respects Bash behavior: && executes right if left succeeds,
+	* || executes right if left fails.
+	*/
 int	ft_exec_logical(t_ast *node, t_minishell *data)
 {
 	int	status;
@@ -36,9 +36,9 @@ int	ft_exec_logical(t_ast *node, t_minishell *data)
 }
 
 /**
- * ft_exec_subshell - Executes a command tree inside a forked process.
- * Used for ( ) parentheses to isolate execution environment.
- */
+	* ft_exec_subshell - Executes a command tree inside a forked process.
+	* Used for ( ) parentheses to isolate execution environment.
+	*/
 int	ft_exec_subshell(t_ast *node, t_minishell *data)
 {
 	pid_t	pid;

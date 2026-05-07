@@ -18,8 +18,8 @@ int	ft_is_space(char c)
 }
 
 /**
- * Fonction utilitaire qui cherche 'c' dans 'charset' et renvoie 1 si trouve.
- */
+	* Fonction utilitaire qui cherche 'c' dans 'charset' et renvoie 1 si trouve.
+	*/
 int	ft_is_in_charset(char c, char *charset)
 {
 	int	i;

@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 /**
- * Fonction pour recuperer la ligne commencant par 'PATH=' dans l'environnement
- * envp.
- */
+	* Fonction pour recuperer la ligne commencant par 'PATH=' dans l'environnement
+	* envp.
+	*/
 char	*ft_find_path(char **envp)
 {
 	const char	*path = "PATH=";
@@ -32,8 +32,8 @@ char	*ft_find_path(char **envp)
 }
 
 /**
- * Fonction d'initialisation pour minishell
- */
+	* Fonction d'initialisation pour minishell
+	*/
 t_minishell	*ft_init_minishell(char **envp)
 {
 	t_minishell	*data;

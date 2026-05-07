@@ -3,44 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 03:47:12 by vlad              #+#    #+#             */
-/*   Updated: 2026/03/28 16:49:01 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(void)
+static char	*ft_get_cwd_dynamic(void)
 {
 	size_t	size;
-	char	*ret;
-	char	*buffer;
+	char	*buf;
 
 	size = 1024;
-	buffer = malloc(sizeof(char) * size);
-	if (!buffer)
-		return ;
-	ret = getcwd(buffer, size);
-	while (ret == NULL)
+	buf = malloc(size);
+	while (buf && !getcwd(buf, size))
 	{
-		if (errno == ERANGE)
+		if (errno != ERANGE)
 		{
-			free(buffer);
-			size *= 2;
-			buffer = malloc(sizeof(char) * size);
-			if (!buffer)
-				return ;
-			ret = getcwd(buffer, size);
+			free(buf);
+			return (NULL);
 		}
-		else
-		{
-			free(buffer);
-			return ;
-		}
+		free(buf);
+		size *= 2;
+		buf = malloc(size);
 	}
-	ft_putstr_fd(buffer, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	free(buffer);
+	return (buf);
+}
+
+void	ft_pwd(void)
+{
+	char	*buf;
+
+	buf = ft_get_cwd_dynamic();
+	if (buf)
+	{
+		ft_putstr_fd(buf, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		free(buf);
+	}
 }

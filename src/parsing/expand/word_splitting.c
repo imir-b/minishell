@@ -6,37 +6,46 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:49:58 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/04/07 14:49:26 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	ft_count_in_str(char *s)
+{
+	int	j;
+	int	count;
+	int	quotes;
+
+	j = 0;
+	count = 0;
+	quotes = 0;
+	while (s[j] == ' ')
+		j++;
+	if (s[j] != '\0')
+		count++;
+	while (s[j])
+	{
+		if ((s[j] == '\x01' || s[j] == '\x02') && (!quotes || quotes == s[j]))
+			quotes ^= s[j];
+		else if (s[j] == ' ' && !quotes && s[j + 1] != ' ' && s[j + 1] != '\0')
+			count++;
+		j++;
+	}
+	return (count);
+}
+
 int	ft_count_words_array(char **strs)
 {
 	int	i;
-	int	j;
 	int	total_words;
-	int	quotes;
 
-	i = ((total_words = ((quotes = 0))));
+	i = 0;
+	total_words = 0;
 	while (strs[i])
 	{
-		j = 0;
-		while (strs[i][j] == ' ')
-			j++;
-		if (strs[i][j] != '\0')
-			total_words++;
-		while (strs[i][j])
-		{
-			if ((strs[i][j] == '\x01' || strs[i][j] == '\x02')
-				&& (!quotes || quotes == strs[i][j]))
-				quotes ^= strs[i][j];
-			else if (strs[i][j] == ' ' && !quotes && strs[i][j + 1] != ' '
-					&& strs[i][j + 1] != '\0')
-				total_words++;
-			j++;
-		}
+		total_words += ft_count_in_str(strs[i]);
 		i++;
 	}
 	return (total_words);
@@ -91,7 +100,8 @@ char	**ft_word_splitting(char **args)
 	char	**dest;
 	int		a;
 
-	i = ((a = 0));
+	i = 0;
+	a = 0;
 	dest = malloc(sizeof(char *) * (ft_count_words_array(args) + 1));
 	if (!dest)
 		return (NULL);
@@ -108,6 +118,5 @@ char	**ft_word_splitting(char **args)
 		i++;
 	}
 	dest[a] = NULL;
-	ft_free_tab(args);
-	return (dest);
+	return (ft_free_tab(args), dest);
 }

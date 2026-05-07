@@ -25,6 +25,14 @@ int		ft_exec_subshell(t_ast *node, t_minishell *data);
 char	*ft_get_cmd_path(char *cmd, t_hash_table *hash_map);
 char	**ft_get_env_tab(t_hash_table *hash_map);
 
+/* Internal execution utilities */
+int		ft_is_assignment(char *arg);
+int		ft_is_builtin(char *cmd);
+int		ft_exec_builtin(t_ast *node, t_minishell *data);
+int		ft_handle_exec_error(char *cmd, char *path);
+void	ft_apply_assignments(t_hash_table *h_m, char **args, int count, int exp);
+int		ft_exec_external(t_ast *node, t_minishell *data, int i, char **orig_args);
+
 /* Built-ins */
 void    ft_cd(t_hash_table *hash_map, char *path);
 void    ft_echo(char **args);

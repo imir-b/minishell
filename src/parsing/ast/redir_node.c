@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:44:19 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/15 22:58:47 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@ static void	ft_fill_redir(t_node_type type, char *file, int flags, t_ast *node)
 	node->type = type;
 	node->redir_data->file = ft_strdup(file);
 	node->redir_data->flags = flags;
-}
-
-t_token	*ft_extract_redir_tokens(t_token *op, t_token *file_name,
-			t_token *first)
-{
-	t_token	*prev_tok;
-	t_token	*next_tok;
-
-	prev_tok = op->prev;
-	next_tok = file_name->next;
-	if (prev_tok)
-		prev_tok->next = next_tok;
-	if (next_tok)
-		next_tok->prev = prev_tok;
-	if (op == first)
-		return (next_tok);
-	return (first);
 }
 
 static void	ft_handle_heredoc_quotes(t_token *file_name, t_ast *node)
@@ -67,21 +50,10 @@ static void	ft_assign_redir_type(t_token *current, t_token *file, t_ast *node)
 		ft_handle_heredoc_quotes(file, node);
 }
 
-t_ast	*ft_create_redir_node(t_token *current, t_token *first,
-			t_minishell *data)
+static t_ast	*ft_alloc_redir_node(void)
 {
 	t_ast	*node;
-	t_token	*file_name;
-	t_token	*next_op;
-	int		is_first;
 
-	file_name = current->next;
-	if (!file_name)
-		return (NULL);
-	is_first = (current == first);
-	first = ft_extract_redir_tokens(current, file_name, first);
-	if (is_first && first && first->type == TOK_L_PAREN)
-		return (ft_syntax_error("("), NULL);
 	node = malloc(sizeof(t_ast) * 1);
 	if (!node)
 		return (NULL);
@@ -89,17 +61,33 @@ t_ast	*ft_create_redir_node(t_token *current, t_token *first,
 	node->redir_data = malloc(sizeof(t_redir_data) * 1);
 	if (!node->redir_data)
 		return (free(node), NULL);
-	ft_assign_redir_type(current, file_name, node);
-	free(current->value);
-	free(current);
-	free(file_name->value);
-	free(file_name);
-	
-	next_op = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
-	if (next_op)
-		node->left = ft_create_redir_node(next_op, first, data);
+	node->right = NULL;
+	return (node);
+}
+
+t_ast	*ft_create_redir_node(t_token *curr, t_token *first, t_minishell *data)
+{
+	t_ast	*node;
+	t_token	*file;
+	t_token	*next;
+
+	file = curr->next;
+	if (!file)
+		return (NULL);
+	if (curr == first && (first = ft_extract_redir_tokens(curr, file, first))
+		&& first->type == TOK_L_PAREN)
+		return (ft_syntax_error("("), NULL);
+	else if (curr != first)
+		first = ft_extract_redir_tokens(curr, file, first);
+	node = ft_alloc_redir_node();
+	if (!node)
+		return (NULL);
+	ft_assign_redir_type(curr, file, node);
+	(free(curr->value), free(curr), free(file->value), free(file));
+	next = ft_find_operator(first, TOK_REDIR_IN, TOK_HEREDOC);
+	if (next)
+		node->left = ft_create_redir_node(next, first, data);
 	else
 		node->left = ft_create_tree(first, data);
-	node->right = NULL;
 	return (node);
 }

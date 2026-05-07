@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:00:26 by vlad              #+#    #+#             */
-/*   Updated: 2026/04/15 23:17:07 by vlad             ###   ########.fr       */
+/*   Updated: 2026/05/07 10:00:00 by gemini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static char	*ft_get_heredoc_temp_file_name(void)
 	return (temp_file_name);
 }
 
-static int	ft_heredoc_loop(int fd, int saved_stdin, t_redir_data *redir, t_hash_table *map)
+static int	ft_heredoc_loop(int fd, int saved_stdin,
+	t_redir_data *redir, t_hash_table *map)
 {
 	char	*line;
 	char	*exp;
@@ -41,8 +42,7 @@ static int	ft_heredoc_loop(int fd, int saved_stdin, t_redir_data *redir, t_hash_
 		if (g_exit_status == 130)
 		{
 			dup2(saved_stdin, STDIN_FILENO);
-			free(line);
-			return (1);
+			return (free(line), 1);
 		}
 		if (!line || ft_strcmp(line, redir->file) == 0)
 			return (free(line), 0);
@@ -58,14 +58,10 @@ static int	ft_heredoc_loop(int fd, int saved_stdin, t_redir_data *redir, t_hash_
 		ft_putchar_fd('\n', fd);
 		free(line);
 	}
-	return (0);
 }
 
-int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
+static void	ft_check_redir_wildcard(t_redir_data *redir_data)
 {
-	char	*temp_file;
-	int		fd;
-	int		saved_stdin;
 	char	**temp_arr;
 	char	**wildcard_exp;
 
@@ -78,6 +74,15 @@ int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
 		redir_data->file = ft_strdup(wildcard_exp[0]);
 	}
 	ft_free_tab(wildcard_exp);
+}
+
+int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
+{
+	char	*temp_file;
+	int		fd;
+	int		saved_stdin;
+
+	ft_check_redir_wildcard(redir_data);
 	temp_file = ft_get_heredoc_temp_file_name();
 	if (!temp_file)
 		return (1);
@@ -91,15 +96,12 @@ int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
 		close(saved_stdin);
 		close(fd);
 		unlink(temp_file);
-		ft_setup_signals_interactive();
-		return (free(temp_file), 1);
+		return (ft_setup_signals_interactive(), free(temp_file), 1);
 	}
 	close(saved_stdin);
 	close(fd);
 	ft_setup_signals_interactive();
-	free(redir_data->file);
-	redir_data->file = temp_file;
-	return (0);
+	return (free(redir_data->file), redir_data->file = temp_file, 0);
 }
 
 int	ft_gather_heredocs(t_ast *node, t_hash_table *hash_map)
