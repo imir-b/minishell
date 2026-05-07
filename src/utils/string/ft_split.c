@@ -59,8 +59,10 @@ char	**ft_split(const char *str, char sep)
 	int			word;
 	size_t		len;
 
+	if (!str)
+		return (NULL);
 	dest = malloc(sizeof(char *) * (ft_countwords(str, sep) + 1));
-	if (!str || !dest)
+	if (!dest)
 		return (NULL);
 	word = 0;
 	while (*str)

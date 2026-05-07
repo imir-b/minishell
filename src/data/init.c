@@ -35,8 +35,6 @@ t_minishell	*ft_init_minishell(char **envp)
 	if (!data)
 		return (NULL);
 	data->paths = ft_split(ft_find_path(envp), ':');
-	if (!data->paths)
-		return (ft_free_data(data));
 	data->hash_map = ft_init_hash_map(envp);
 	if (!data->hash_map)
 		return (ft_free_data(data));

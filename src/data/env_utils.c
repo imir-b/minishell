@@ -90,3 +90,14 @@ void	ft_update_shlvl(t_hash_table *hash_map)
 	}
 	ft_hash_table_insert(hash_map, ft_strdup("SHLVL"), ft_itoa(shlvl), 1);
 }
+
+void	ft_set_default_env(t_hash_table *hash_map)
+{
+	char	buf[PATH_MAX];
+
+	if (!ft_get_value(hash_map, "PWD"))
+	{
+		if (getcwd(buf, PATH_MAX))
+			ft_hash_table_insert(hash_map, ft_strdup("PWD"), ft_strdup(buf), 1);
+	}
+}
