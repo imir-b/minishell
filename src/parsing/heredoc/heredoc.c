@@ -39,8 +39,11 @@ static int	ft_heredoc_loop(int fd, int saved_stdin, t_redir_data *redir, t_hash_
 	{
 		line = readline("> ");
 		if (g_exit_status == 130)
-			return (dup2(saved_stdin, STDIN_FILENO), close(saved_stdin),
-				close(fd), unlink(redir->file), free(line), 1);
+		{
+			dup2(saved_stdin, STDIN_FILENO);
+			free(line);
+			return (1);
+		}
 		if (!line || ft_strcmp(line, redir->file) == 0)
 			return (free(line), 0);
 		if (redir->expand_heredoc)
@@ -55,7 +58,7 @@ static int	ft_heredoc_loop(int fd, int saved_stdin, t_redir_data *redir, t_hash_
 		ft_putchar_fd('\n', fd);
 		free(line);
 	}
-	return (close(saved_stdin), close(fd), ft_setup_signals_interactive(), 0);
+	return (0);
 }
 
 int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
@@ -85,11 +88,15 @@ int	ft_process_heredoc(t_redir_data *redir_data, t_hash_table *hash_map)
 	ft_setup_signals_heredoc();
 	if (ft_heredoc_loop(fd, saved_stdin, redir_data, hash_map))
 	{
+		close(saved_stdin);
 		close(fd);
 		unlink(temp_file);
+		ft_setup_signals_interactive();
 		return (free(temp_file), 1);
 	}
+	close(saved_stdin);
 	close(fd);
+	ft_setup_signals_interactive();
 	free(redir_data->file);
 	redir_data->file = temp_file;
 	return (0);
