@@ -57,6 +57,7 @@ t_env_node				*ft_find_env_node(t_hash_table *hash_map, char *key);
 void					ft_hash_table_insert(t_hash_table *hash_map,
 							char *key, char *value, int export_flag);
 void					ft_update_shlvl(t_hash_table *hash_map);
+void					ft_set_default_env(t_hash_table *hash_map);
 char					**ft_word_splitting(char **args);
 char					**ft_expand_wildcards(char **args);
 t_list					*ft_handle_star(char *arg);

@@ -30,9 +30,7 @@ unsigned long	ft_hash_djb2(unsigned char *str)
 t_hash_table	*ft_init_hash_map(char **envp)
 {
 	t_hash_table	*hash_map;
-	char			*key;
-	char			*value;
-	int				i;
+	char			*equal;
 
 	hash_map = malloc(sizeof(t_hash_table));
 	if (!hash_map)
@@ -42,16 +40,19 @@ t_hash_table	*ft_init_hash_map(char **envp)
 		return (free(hash_map), NULL);
 	hash_map->size = HASH_SIZE;
 	hash_map->count = 0;
-	i = 0;
-	while (envp && envp[i])
+	while (envp && *envp)
 	{
-		key = ft_extract_key(envp[i]);
-		value = ft_strdup((ft_strchr(envp[i], '=')) + 1);
-		ft_hash_table_insert(hash_map, key, value, 1);
-		i++;
+		equal = ft_strchr(*envp, '=');
+		if (equal)
+		{
+			ft_hash_table_insert(hash_map, ft_substr(*envp, 0,
+					equal - *envp), ft_strdup(equal + 1), 1);
+			hash_map->count++;
+		}
+		envp++;
 	}
-	hash_map->count = i;
 	ft_update_shlvl(hash_map);
+	ft_set_default_env(hash_map);
 	return (hash_map);
 }
 
