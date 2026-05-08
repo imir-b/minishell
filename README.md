@@ -45,8 +45,12 @@ You can then type commands as you would in a regular shell.
 - **GNU Readline Documentation**: For handling user input and history.
 - **Linux Manual Pages**: `man 2 fork`, `man 2 pipe`, `man 2 execve`, `man 2 sigaction`.
 - **Bash Reference Manual**: To understand the expected behavior of a POSIX shell.
-- **AI Usage**: Gemini CLI was used as a peer-programming assistant to:
-    - Scaffold the execution engine (pipes, redirections, logical operators).
-    - Debug memory issues (identifying double frees in AST nodes).
-    - Implement the hash map utility functions for environment management.
-    - Assist in installing system dependencies (`libreadline-dev`).
+- **Hash Functions**: http://www.cse.yorku.ca/~oz/hash.html
+- **Programming Language Syntax: Backus-Naur Form (BNF)**: https://www.youtube.com/watch?v=MMxMeX5emUA
+- **This Simple Algorithm Powers Real Interpreters: Pratt Parsing**: https://www.youtube.com/watch?v=0c8b7YfsBKs
+- **The Open Group Base Specifications Issue 7, 2018 edition I**: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_01
+- **Compilers Second Edition**: https://dpvipracollege.ac.in/wp-content/uploads/2023/01/Alfred-V.-Aho-Monica-S.-Lam-Ravi-Sethi-Jeffrey-D.-Ullman-Compilers-Principles-Techniques-and-Tools-Pearson_Addison-Wesley-2007.pdf
+- **Abstract syntax tree**: https://en.wikipedia.org/wiki/Abstract_syntax_tree
+- **Abstract syntax tree**: https://www.eclipse.org/articles/Article-JavaCodeManipulation_AST/index.html
+- **Hachage : Fonctions, algorithmes et fonctionnement | Okta**: https://www.okta.com/fr-fr/identity-101/hashing-algorithms/
+- **AI Usage**: Readme

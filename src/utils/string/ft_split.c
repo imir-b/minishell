@@ -6,7 +6,7 @@
 /*   By: vbleskin <vbleskin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:24:35 by vbleskin          #+#    #+#             */
-/*   Updated: 2026/05/06 13:57:08 by vbleskin         ###   ########.fr       */
+/*   Updated: 2026/05/08 01:58:51 by vbleskin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,11 @@ static int	ft_countwords(const char *str, char sep)
 	return (count);
 }
 
-char	**ft_split(const char *str, char sep)
+static char	**ft_fill_array(char **dest, const char *str, char sep)
 {
-	char		**dest;
-	int			word;
-	size_t		len;
+	int		word;
+	size_t	len;
 
-	if (!str)
-		return (NULL);
-	dest = malloc(sizeof(char *) * (ft_countwords(str, sep) + 1));
-	if (!dest)
-		return (NULL);
 	word = 0;
 	while (*str)
 	{
@@ -81,4 +75,16 @@ char	**ft_split(const char *str, char sep)
 	}
 	dest[word] = NULL;
 	return (dest);
+}
+
+char	**ft_split(const char *str, char sep)
+{
+	char	**dest;
+
+	if (!str)
+		return (NULL);
+	dest = malloc(sizeof(char *) * (ft_countwords(str, sep) + 1));
+	if (!dest)
+		return (NULL);
+	return (ft_fill_array(dest, str, sep));
 }
