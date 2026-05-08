@@ -30,13 +30,17 @@ static int	ft_open_file(t_ast *node)
 	return (fd);
 }
 
-static int	ft_apply_all_redirs(t_ast **node)
+static int	ft_apply_all_redirs(t_ast **node, t_hash_table *map)
 {
 	int	fd;
 
 	while (*node && (*node)->type >= NODE_REDIR_IN
 		&& (*node)->type <= NODE_HEREDOC)
 	{
+		/* Fix: Expand each redirection in the chain before applying it.
+		   This ensures $VARS are handled for all redirections. */
+		if (ft_expand_node(*node, map))
+			return (1);
 		fd = ft_open_file(*node);
 		if (fd == -1)
 			return (g_exit_status = 1, 1);
@@ -67,7 +71,7 @@ int	ft_exec_redir(t_ast *node, t_minishell *data)
 
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
-	if (ft_apply_all_redirs(&node) == 0)
+	if (ft_apply_all_redirs(&node, data->hash_map) == 0)
 		status = ft_exec_node(node->left, data);
 	else
 		status = 1;

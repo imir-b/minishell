@@ -77,8 +77,6 @@ int	ft_exec_node(t_ast *node, t_minishell *data)
 		return (ft_exec_pipe(node, data));
 	if (node->type >= NODE_REDIR_IN && node->type <= NODE_HEREDOC)
 	{
-		if (ft_expand_node(node, data->hash_map))
-			return (1);
 		return (ft_exec_redir(node, data));
 	}
 	if (node->type == NODE_AND || node->type == NODE_OR)

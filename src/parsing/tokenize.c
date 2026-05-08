@@ -98,6 +98,10 @@ t_token	*ft_token_last(t_token *first)
 {
 	t_token	*last;
 
+	/* Fix: Added NULL check to prevent segfault when no tokens are left
+	   (e.g., during redirections without commands) */
+	if (!first)
+		return (NULL);
 	last = first;
 	while (last->next)
 		last = last->next;
